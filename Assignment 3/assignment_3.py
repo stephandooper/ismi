@@ -130,7 +130,6 @@ import sklearn
 import sklearn.neighbors
 import matplotlib.pyplot as plt
 from IPython import display
-get_ipython().run_line_magic('matplotlib', 'inline')
 import itertools
 import time
 from tqdm import tqdm
