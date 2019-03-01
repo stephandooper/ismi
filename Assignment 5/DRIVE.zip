@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html class="ng-csp" data-placeholder-focus="false" lang="en" >
+	<head data-requesttoken="">
+		<meta charset="utf-8">
+		<title>
+		SURFdrive		</title>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="referrer" content="never">
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+		<meta name="apple-itunes-app" content="app-id=863952799">
+		<meta name="theme-color" content="#ed6b06">
+		<link rel="icon" href="/files/apps/theme-surfdrive/core/img/favicon.ico">
+		<link rel="apple-touch-icon-precomposed" href="/files/apps/theme-surfdrive/core/img/favicon-touch.png">
+		<link rel="mask-icon" sizes="any" href="/files/apps/theme-surfdrive/core/img/favicon-mask.svg" color="#1d2d44">
+					<link rel="stylesheet" href="/files/core/vendor/select2/select2.css?v=bea6206d518c3be30208ad593e86d2f7">
+					<link rel="stylesheet" href="/files/core/css/styles.css?v=bea6206d518c3be30208ad593e86d2f7">
+					<link rel="stylesheet" href="/files/core/css/inputs.css?v=bea6206d518c3be30208ad593e86d2f7">
+					<link rel="stylesheet" href="/files/core/css/header.css?v=bea6206d518c3be30208ad593e86d2f7">
+					<link rel="stylesheet" href="/files/core/css/icons.css?v=bea6206d518c3be30208ad593e86d2f7">
+					<link rel="stylesheet" href="/files/core/css/fonts.css?v=bea6206d518c3be30208ad593e86d2f7">
+					<link rel="stylesheet" href="/files/core/css/apps.css?v=bea6206d518c3be30208ad593e86d2f7">
+					<link rel="stylesheet" href="/files/core/css/global.css?v=bea6206d518c3be30208ad593e86d2f7">
+					<link rel="stylesheet" href="/files/core/css/fixes.css?v=bea6206d518c3be30208ad593e86d2f7">
+					<link rel="stylesheet" href="/files/core/css/multiselect.css?v=bea6206d518c3be30208ad593e86d2f7">
+					<link rel="stylesheet" href="/files/core/css/mobile.css?v=bea6206d518c3be30208ad593e86d2f7">
+					<link rel="stylesheet" href="/files/core/vendor/jquery-ui/themes/base/jquery-ui.css?v=bea6206d518c3be30208ad593e86d2f7">
+					<link rel="stylesheet" href="/files/core/css/jquery-ui-fixes.css?v=bea6206d518c3be30208ad593e86d2f7">
+					<link rel="stylesheet" href="/files/core/css/tooltip.css?v=bea6206d518c3be30208ad593e86d2f7">
+					<link rel="stylesheet" href="/files/core/css/share.css?v=bea6206d518c3be30208ad593e86d2f7">
+					<link rel="stylesheet" href="/files/apps/files_versions/css/versions.css?v=bea6206d518c3be30208ad593e86d2f7">
+					<link rel="stylesheet" href="/files/apps/music/css/public/files-music-player.css?v=bea6206d518c3be30208ad593e86d2f7">
+					<link rel="stylesheet" href="/files/apps/files_pdfviewer/css/style.css?v=bea6206d518c3be30208ad593e86d2f7">
+					<link rel="stylesheet" href="/files/apps/files_videoplayer/css/style.css?v=bea6206d518c3be30208ad593e86d2f7">
+					<link rel="stylesheet" href="/files/apps/gallery/css/slideshow.css?v=bea6206d518c3be30208ad593e86d2f7">
+					<link rel="stylesheet" href="/files/apps/gallery/css/gallerybutton.css?v=bea6206d518c3be30208ad593e86d2f7">
+					<link rel="stylesheet" href="/files/core/css/jquery.ocdialog.css?v=bea6206d518c3be30208ad593e86d2f7">
+					<link rel="stylesheet" href="/files/apps/theme-surfdrive/core/css/styles.css?v=bea6206d518c3be30208ad593e86d2f7">
+					<link rel="stylesheet" href="/files/apps/theme-surfdrive/core/css/inputs.css?v=bea6206d518c3be30208ad593e86d2f7">
+					<link rel="stylesheet" href="/files/apps/theme-surfdrive/core/css/header.css?v=bea6206d518c3be30208ad593e86d2f7">
+					<link rel="stylesheet" href="/files/apps/theme-surfdrive/core/css/icons.css?v=bea6206d518c3be30208ad593e86d2f7">
+					<link rel="stylesheet" href="/files/apps/theme-surfdrive/core/css/apps.css?v=bea6206d518c3be30208ad593e86d2f7">
+									<script src="/files/core/vendor/jquery/dist/jquery.min.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/core/vendor/jquery-migrate/jquery-migrate.min.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/core/vendor/jquery-ui/ui/jquery-ui.custom.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/core/vendor/underscore/underscore.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/core/vendor/moment/min/moment-with-locales.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/core/vendor/handlebars/handlebars.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/core/vendor/blueimp-md5/js/md5.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/core/vendor/bootstrap/js/tooltip.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/core/vendor/backbone/backbone.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/core/vendor/es6-promise/dist/es6-promise.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/core/vendor/davclient.js/lib/client.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/core/vendor/clipboard/dist/clipboard.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/core/vendor/bowser/src/bowser.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/core/js/jquery.ocdialog.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/core/js/oc-dialogs.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/core/js/js.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/core/js/l10n.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/core/js/octemplate.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/core/js/eventsource.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/core/js/config.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/core/search/js/search.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/core/js/oc-requesttoken.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/core/js/apps.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/core/js/mimetype.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/core/js/mimetypelist.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/core/vendor/snapjs/dist/latest/snap.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/core/vendor/select2/select2.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/core/js/oc-backbone.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/core/js/oc-backbone-webdav.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/core/js/placeholder.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/core/js/jquery.avatar.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/core/js/shareconfigmodel.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/core/js/sharemodel.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/core/js/sharescollection.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/core/js/shareitemmodel.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/core/js/sharedialogresharerinfoview.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/core/js/sharedialoglinklistview.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/core/js/sharedialoglinkshareview.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/core/js/sharedialogmailview.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/core/js/sharedialoglinksocialview.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/core/js/sharedialogexpirationview.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/core/js/sharedialogshareelistview.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/core/js/sharedialogview.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/core/js/share.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/apps/music/js/vendor/soundmanager/script/soundmanager2-nodebug-jsmin.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/apps/music/js/vendor/aurora/aurora-bundle.min.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/apps/music/js/vendor/javascript-detect-element-resize/jquery.resize.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/apps/music/js/vendor/jquery-initialize/jquery.initialize.min.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/apps/music/js/vendor/js-cookie/src/js.cookie.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/apps/music/js/public/files-music-player.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/apps/files_clipboard/js/clearClipboard.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/apps/files_pdfviewer/js/previewplugin.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/apps/files_videoplayer/js/viewer.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/apps/gallery/js/vendor/bigshot/bigshot-compressed.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/apps/gallery/js/vendor/dompurify/src/purify.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/apps/gallery/js/galleryutility.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/apps/gallery/js/galleryfileaction.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/apps/gallery/js/slideshow.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/apps/gallery/js/slideshowcontrols.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/apps/gallery/js/slideshowzoomablepreview.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/apps/gallery/js/gallerybutton.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/apps/gallery/js/rotate.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/apps/gallery/js/rotacion_cup.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/core/js/files/fileinfo.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					<script src="/files/core/js/files/client.js?v=bea6206d518c3be30208ad593e86d2f7"></script>
+					</head>
+	<body id="body-login">
+		<noscript>
+	<div id="nojavascript">
+		<div>
+			This application requires JavaScript for correct operation. Please <a href="http://enable-javascript.com/" target="_blank" rel="noreferrer">enable JavaScript</a> and reload the page.		</div>
+	</div>
+</noscript>
+		<div class="wrapper">
+			<div class="v-align">
+									<header role="banner">
+						<div id="header">
+							<div class="logo">
+								<h1 class="hidden-visually">
+									SURFdrive								</h1>
+							</div>
+							<div id="logo-claim" style="display:none;"></div>
+						</div>
+					</header>
+								<ul class="error-wide">
+			<li class='error'>
+			Unspecified share exception<br>
+					</li>
+	</ul>
+				<div class="push"></div><!-- for sticky footer -->
+			</div>
+		</div>
+		<footer role="contentinfo">
+			<p class="info">
+				© 2017 <a href="https://surfdrive.surf.nl" target="_blank\">SURFdrive</a><br/>SURFdrive - a service by SURF			</p>
+		</footer>
+	</body>
+</html>
