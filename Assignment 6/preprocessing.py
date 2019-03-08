@@ -236,6 +236,9 @@ class BatchGenerator(Sequence):
         # you may need to add this  + '.png' for the next line for windows.
         image_name = train_instance['filename'] + '.png'
         image = cv2.imread(image_name)
+        if image is None:
+            raise RuntimeException(image_name)
+
         h, w, c = image.shape
 
         all_objs = copy.deepcopy(train_instance['object'])
