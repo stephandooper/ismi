@@ -235,6 +235,7 @@ class BatchGenerator(Sequence):
     def aug_image(self, train_instance, jitter):
         # you may need to add this  + '.png' for the next line for windows.
         image_name = train_instance['filename']
+	print(image_name)
         image = cv2.imread(image_name)
         h, w, c = image.shape
 
