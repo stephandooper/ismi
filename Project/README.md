@@ -2,10 +2,11 @@
 
 ## Configuring on Ponyland (Linux only!)
 On Ponyland:
-1. Install Conda
+1. Install [Conda](https://www.anaconda.com/distribution/#download-section) on Thunderlane
 2. Install Tensorflow package
 ```bash
 conda create --name tf_gpu tensorflow-gpu
+conda activate tf_gpu
 ```
 3. Launch Jupyter Notebook
 ```bash
