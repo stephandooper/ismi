@@ -1,4 +1,25 @@
 # ISMI Project
+
+## Configuring on Ponyland (Linux only!)
+On Ponyland:
+1. Install Conda
+2. Install Tensorflow package
+```bash
+conda create --name tf_gpu tensorflow-gpu
+```
+3. Launch Jupyter Notebook
+```bash
+jupyter notebook --port 8888
+```
+
+4. Tunnel SSH (from Terminal on your own machine)
+```bash
+ssh -L 8888:thunderlane:8888 user@applejack.science.ru.nl
+ssh -L 6006:thunderlane:6006 user@applejack.science.ru.nl
+```
+
+5. Access Jupyter Notebook on your [own system](http://localhost:8888).
+
 ## Prerequisites
 ```bash
 pip install -U scikit-image
