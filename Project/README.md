@@ -1,19 +1,20 @@
 # ISMI Project
 
-## Configuring on Ponyland (Linux only!)
-On Ponyland:
-1. Install [Conda](https://www.anaconda.com/distribution/#download-section) on Thunderlane
-2. Install Tensorflow package
+## Installing dependencies and running Jupyter Notebook
+1. Install [Conda](https://www.anaconda.com/distribution/#download-section).
+2. Clone the repository and install the dependencies using Conda.
 ```bash
-conda create --name tf_gpu tensorflow-gpu
-conda activate tf_gpu
+conda env create -f environment.yml
+conda activate ismi19
 ```
-3. Launch Jupyter Notebook
+3. Launch Jupyter Notebook.
 ```bash
 jupyter notebook --port 8888
 ```
+## Configuring on Ponyland (Linux only!)
+Follow step 1-3 from the ordinary install process.
 
-4. Tunnel SSH (from Terminal on your own machine)
+4. Tunnel internet traffic trough SSH, run from a terminal on your own machine.
 ```bash
 ssh -L 8888:thunderlane:8888 user@applejack.science.ru.nl
 ssh -L 6006:thunderlane:6006 user@applejack.science.ru.nl
