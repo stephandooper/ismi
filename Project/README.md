@@ -1,4 +1,8 @@
 # ISMI Project
+## Prerequisites
+```bash
+pip install -U scikit-image
+```
 
 ## Dataset
 The dataset can be acquired [here](https://www.kaggle.com/c/histopathologic-cancer-detection/data). You can unzip the file to [./data/](data/).
