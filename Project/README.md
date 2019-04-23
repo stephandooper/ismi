@@ -20,7 +20,7 @@ jupyter notebook --no-browser --ip=0.0.0.0
 ```
 
 ## Configuring on Ponyland (Linux only!)
-Follow step 1-3 from the ordinary install process from [here](#https://www.digitalocean.com/community/tutorials/how-to-install-anaconda-on-ubuntu-18-04-quickstart). If the .bashrc script does not exist, then manually add it with the following line
+Follow step 1-3 from the ordinary install process from [here](https://www.digitalocean.com/community/tutorials/how-to-install-anaconda-on-ubuntu-18-04-quickstart). If the .bashrc script does not exist, then manually add it with the following line
 ```
 export PATH="/home/<USER>/anaconda3/bin:$PATH"
 ```
