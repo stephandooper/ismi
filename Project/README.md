@@ -12,7 +12,7 @@ conda activate ismi19
 jupyter notebook --port 8888
 ```
 ## Configuring on Ponyland (Linux only!)
-Follow step 1-3 from the ordinary install process.
+Follow step 1-3 from the ordinary install process from here[https://www.digitalocean.com/community/tutorials/how-to-install-anaconda-on-ubuntu-18-04-quickstart].
 
 4. Tunnel internet traffic trough SSH, run from a terminal on your own machine.
 ```bash
