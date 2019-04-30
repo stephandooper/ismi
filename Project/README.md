@@ -1,4 +1,21 @@
-# ISMI Project
+# ISMI Project (LINUX ONLY!)
+
+## Configuring Ponyland access
+In order to get access to the Ponyland cluster from Radboud University one needs:
+* A science account from Radboud
+* Access to the University network (also possible via a VPN connection)
+
+General information on how to get a science account, and set up a VPN connection, as well as how to connect to the ponies can be found on the [Ponyland wikiw](https://ponyland.science.ru.nl/doku.php?id=start)
+
+## Installing Anaconda on Ponyland 
+We assume that the user has access to the ponies. We first set up an anaconda environment to manage our packages. In order to avoid problems with disk space in the home folder of the user, we use the ``tensusers`` volume to install anaconda. We mostly follow steps 1-3 from the ordinary install process from [here](https://www.digitalocean.com/community/tutorials/how-to-install-anaconda-on-ubuntu-18-04-quickstart).
+
+1. From the home folder, cd to the tensusers volume and replace <YOUR_USERNAME> ``` cd /vol/tensusers/<YOUR_USERNAME>/ ```.
+2. Get the install link from the [anaconda webpage](https://www.anaconda.com/distribution/#download-section) and download it using ```wget```.
+3. Once the download is complete, create a new bashrc script by using ``` nano bashrc```
+4. In the bash script, put the following code and replace <USER> with your username ``` export PATH="/home/<USER>/anaconda3/bin:$PATH" ```
+5. Activate the bash script using ``` source ~/.bashrc```. This will activate the conda environment.
+6. 
 
 ## Installing dependencies and running Jupyter Notebook
 1. Install [Conda](https://www.anaconda.com/distribution/#download-section).
@@ -20,11 +37,7 @@ nice -n 19 jupyter notebook --no-browser --ip=0.0.0.0
 ```
 
 ## Configuring on Ponyland (Linux only!)
-Follow step 1-3 from the ordinary install process from [here](https://www.digitalocean.com/community/tutorials/how-to-install-anaconda-on-ubuntu-18-04-quickstart). If the .bashrc script does not exist, then manually add it with the following line
-```
-export PATH="/home/<USER>/anaconda3/bin:$PATH"
-```
-where ```<USER>``` is replaced by the username. Then, activate the bashrc with ``` source ./bashrc```. From this point onwards, the conda instance should be running and you can create your own environment. 
+
 
 
 4. Tunnel internet traffic trough SSH, run from a terminal on your own machine.
