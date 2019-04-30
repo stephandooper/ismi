@@ -50,7 +50,15 @@ The first tunnel is for the jupyter notebook itself. The second tunnel will be n
 You should now be able to access the jupyter on your [own system](http://localhost:8888) (via http://localhost:/8888).
 
 ## Dataset
+There are several different datasets that could be used for the challenge. The first one is a Kaggle competition (not supported)
 The dataset can be acquired [here](https://www.kaggle.com/c/histopathologic-cancer-detection/data). You can unzip the file to [./data/](data/).
+
+The second one is from the [Grand Challenge website](https://patchcamelyon.grand-challenge.org/) . This one is basically the same as the Kaggle dataset, but contains duplicates and is already split into a training/validation/test set.
+
+
+
+## Sacred with MongoDB (KLAUS!!!!)
+
 
 ## Keras API
 
@@ -77,4 +85,3 @@ Can be used to save models between runs.
 modelcheckpoint = ModelCheckpoint(modelcheckpoint_name, monitor='val_loss', verbose=1, save_best_only=True, save_weights_only=True)
 model.fit_generator(..., callbacks=[modelcheckpoint])
 ```
-
