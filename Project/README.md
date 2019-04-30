@@ -1,4 +1,5 @@
 # ISMI Project (LINUX ONLY!)
+Below is the tutorial to set up the project on the Ponyland cluster. In case you want to work locally, you can ignore this section. It might still be helpfull to read the sections on cloning the anaconda environment.
 
 ## Configuring Ponyland access
 In order to get access to the Ponyland cluster from Radboud University one needs:
@@ -18,45 +19,35 @@ nano bashrc
 ```
 4. In the bash script, put the following code and replace <USER> with your username ``` export PATH="/home/<USER>/anaconda3/bin:$PATH" ```
 5. Activate the bash script using ``` source ~/.bashrc```. This will activate the conda environment.
-6. The git repository includes a premade environment (called ismi.yml). With this, you can clone the complete environment using 
+  
+### Cloning the anaconda environment
+
+The git repository includes a premade environment (called ismi.yml). With this, you can clone the complete environment using 
 ```bash
 conda env create -f ismi.yml
 conda activate ismi19
 ```
 Now, the complete environment will be copied.
 
-## Installing dependencies and running Jupyter Notebook
-1. Install [Conda](https://www.anaconda.com/distribution/#download-section).
-2. Clone the repository and install the dependencies using Conda.
-```bash
-conda env create -f environment.yml
-conda activate ismi19
+## Running a Jupyter Notebook on Ponyland
+In order to run a jupyter notebook on the server, we need to tunnel the network traffic through applejack. 
+
+1. Activate the anaconda environment (see previous section).
+2. Launch the jupyter notebook using the following command
 ```
-3. Launch Jupyter Notebook.
-```bash
-nice -n 19 jupyter notebook --port 8888
+nice -n 19 jupyter notebook --port 8888 --no-browser --ip=0.0.0.0
 ```
-Sometimes port 8888 can already be in use. In that case, another port will be automatically assigned, and port 8888 should be changed with the newly assignment port.
+This will create a job with niceness value 19. The no-browser command will prevent the notebook from running within the terminal, and the ip command opens the ports (will fix any connection refused errors). 
+If port 8888 is closed or already taken by any chance, then you will be automatically assigned a new port (remember this), or you will have to assign a new port yourself.
 
-In case the jupyter notebook connection is refused by the client, try the following command:
-
-```
-nice -n 19 jupyter notebook --no-browser --ip=0.0.0.0
-```
-
-## Configuring on Ponyland (Linux only!)
-
-
-
-4. Tunnel internet traffic trough SSH, run from a terminal on your own machine.
+### Configuring on Ponyland (Linux only!)
+In order to run a jupyter notebook in a local browser, we need to tunnel internet traffic through ssh. First, open a terminal on your local machine and type in the following commands (assuming you assigned port 8888 earlier):
 ```bash
 ssh -L 8888:thunderlane:8888 user@applejack.science.ru.nl
 ssh -L 6006:thunderlane:6006 user@applejack.science.ru.nl
 ```
 The first tunnel is for the jupyter notebook itself. The second tunnel will be needed if you want to import tensorboard
-
-
-5. Access Jupyter Notebook on your [own system](http://localhost:8888).
+You should now be able to access the jupyter on your [own system](http://localhost:8888) (via http://ocalhost:/8888).
 
 ## Dataset
 The dataset can be acquired [here](https://www.kaggle.com/c/histopathologic-cancer-detection/data). You can unzip the file to [./data/](data/).
