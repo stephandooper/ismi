@@ -9,14 +9,14 @@ conda activate ismi19
 ```
 3. Launch Jupyter Notebook.
 ```bash
-jupyter notebook --port 8888
+nice -n 19 jupyter notebook --port 8888
 ```
 Sometimes port 8888 can already be in use. In that case, another port will be automatically assigned, and port 8888 should be changed with the newly assignment port.
 
 In case the jupyter notebook connection is refused by the client, try the following command:
 
 ```
-jupyter notebook --no-browser --ip=0.0.0.0
+nice -n 19 jupyter notebook --no-browser --ip=0.0.0.0
 ```
 
 ## Configuring on Ponyland (Linux only!)
