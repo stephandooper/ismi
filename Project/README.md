@@ -47,7 +47,7 @@ ssh -L 8888:thunderlane:8888 user@applejack.science.ru.nl
 ssh -L 6006:thunderlane:6006 user@applejack.science.ru.nl
 ```
 The first tunnel is for the jupyter notebook itself. The second tunnel will be needed if you want to import tensorboard
-You should now be able to access the jupyter on your [own system](http://localhost:8888) (via http://ocalhost:/8888).
+You should now be able to access the jupyter on your [own system](http://localhost:8888) (via http://localhost:/8888).
 
 ## Dataset
 The dataset can be acquired [here](https://www.kaggle.com/c/histopathologic-cancer-detection/data). You can unzip the file to [./data/](data/).
