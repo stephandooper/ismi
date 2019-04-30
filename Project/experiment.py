@@ -10,6 +10,7 @@ from tqdm import tqdm
 
 # Suppress GPU if needed
 # os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
+os.environ['HDF5_USE_FILE_LOCKING'] = 'FALSE'
 
 from keras.layers import Input, Dense, Flatten
 from keras.models import Model
@@ -23,6 +24,7 @@ from sacred.observers import MongoObserver
 import pymongo
 
 from constants import MONGO_URI, RANDOM_SEED
+from data.data import load_data
 
 ex = Experiment('ISMI', interactive=True)
 # log to the mongoDB instance living in the cloud
@@ -57,12 +59,24 @@ def run(_run):
     batch_size = config.get('batch_size')
     target_size = config.get('target_size')
     only_use_subset = config.get('only_use_subset')
-    train_generator, validation_generator, test_generator = load_data(batch_size = batch_size, target_size=target_size, 
+    train_generator, validation_generator, test_generator = build_generators(batch_size = batch_size, target_size=target_size, 
                                                                       only_use_subset=only_use_subset)
     
     
-    model = build_model()
+    # The function for building the model
+    model_func = model_dict[config.get('model')]
+    # Actually invoke the function
+    model_params = config.get('model_params',{})
     
+    if config.get('model') == 'dense' and 'target_size' not in model_params:
+        model_params['target_size'] = target_size
+    
+    # TODO add kwargs
+    model = model_func(**model_params)
+    
+    # TODO: parametrize optimizer and learning rate here
+    model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+
     tensorboard = TensorBoard(log_dir="logs/{}".format(time()))
     
     epochs = config.get('epochs')
@@ -82,13 +96,19 @@ def run(_run):
     # add the submissions as an artifact
     _run.add_artifact('./data/submission.csv')
     
+
+# TODO offer more parameters
+def build_resnet(**kwargs):
+    """
+    weights ('imagenet'): Pre-trained weights, specify None to have no pre-training.
     
-# TODO parametrize
-def build_model():
+    """
     from keras.applications.resnet50 import ResNet50
     from keras.layers import Dense, GlobalAveragePooling2D
     
-    base_model = ResNet50(weights='imagenet', include_top=False)
+    weights = kwargs.get('weights', 'imagenet')
+    
+    base_model = ResNet50(weights=weights, include_top=False)
 
     x = base_model.output
     x = GlobalAveragePooling2D()(x)
@@ -98,62 +118,60 @@ def build_model():
     predictions = Dense(1, activation='sigmoid')(x)
 
     model = Model(inputs=base_model.input, outputs=predictions)
-    model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
     
     return model
+
+# TODO parametrize
+def build_dense(**kwargs):
+    """
+    target_size: The size of the target images.
     
+    """
+    target_size = kwargs.get('target_size')
+    inputs = Input(shape=(*target_size,3,))
+
+    x = Dense(64, activation='relu')(inputs)
+    x = Dense(64, activation='relu')(x)
+    x = Flatten()(x)
+    predictions = Dense(1, activation='sigmoid')(x)
+    model = Model(inputs=inputs, outputs=predictions)
+    
+    return model
+
+model_dict = {
+    'dense' : build_dense,
+    'resnet': build_resnet 
+}
     
 # TODO add more parameters    
-def load_data(batch_size=32, target_size= (96,96), only_use_subset=False):
-    df_data = pd.read_csv('./data/train_labels.csv')
-    df_data['id'] = df_data['id'].astype(str) + '.tif'
-
-    df_data_test = pd.read_csv('./data/sample_submission.csv')
-    df_data_test['id'] = df_data_test['id'].astype(str) + '.tif'
+def build_generators(batch_size=32, target_size= (96,96), only_use_subset=False):
+    (x_train, y_train, meta_train), (x_valid, y_valid, meta_valid), (x_test, y_test, meta_test) = load_data()
     
-        # Load data into memory
-    df_data_copy = df_data
-    if only_use_subset:
-        df_data_copy = df_data_copy[0:10000]
-
-    x_train = []
-    y_train = np.array(df_data_copy['label'])
-    print('Loading data')
-    for file_path in tqdm(df_data_copy['id']):
-        x_train.append(np.array(Image.open('data/train/{}'.format(file_path))))
-    x_train = np.array(x_train)
-    
-    # Keras-inbuilt generator
     train_datagen = ImageDataGenerator(
-    rescale=1./255,
-    validation_split=0.1
-    # Specify other augmentations here.
+        rescale=1./255,
+        # Specify other augmentations here.
     )
-    
-    train_generator = train_datagen.flow(
-    x=x_train,
-    y=y_train,
-    batch_size=batch_size,
-    subset='training')
 
+    print("[>] Creating validation_generator")
     validation_generator = train_datagen.flow(
-    x=x_train,
-    y=y_train,
-    batch_size=batch_size,
-    subset='validation')
-    
+        x=x_valid,
+        y=np.ravel(y_valid),
+        batch_size=batch_size)
+
+    print("[>] Creating train_generator")
+    train_generator = train_datagen.flow(
+        x=x_train,
+        y=np.ravel(y_train),
+
     test_datagen = ImageDataGenerator(
         rescale=1./255
     )
 
-    test_generator = test_datagen.flow_from_dataframe(
-        dataframe=df_data_test,
-        directory='data/test/',
-        target_size=target_size,
-        batch_size=batch_size,
-        x_col='id',
-        y_col='label',
-        class_mode='other',
+    print("[>] Creating test_generator")
+    test_generator = test_datagen.flow(
+        x=x_test,
+        y=np.ravel(y_test),
+        batch_size=1,
         seed=0,
         shuffle=False
     )
