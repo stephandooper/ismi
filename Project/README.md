@@ -18,7 +18,12 @@ nano bashrc
 ```
 4. In the bash script, put the following code and replace <USER> with your username ``` export PATH="/home/<USER>/anaconda3/bin:$PATH" ```
 5. Activate the bash script using ``` source ~/.bashrc```. This will activate the conda environment.
-6. 
+6. The git repository includes a premade environment (called ismi.yml). With this, you can clone the complete environment using 
+```bash
+conda env create -f ismi.yml
+conda activate ismi19
+```
+Now, the complete environment will be copied.
 
 ## Installing dependencies and running Jupyter Notebook
 1. Install [Conda](https://www.anaconda.com/distribution/#download-section).
