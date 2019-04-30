@@ -12,7 +12,10 @@ We assume that the user has access to the ponies. We first set up an anaconda en
 
 1. From the home folder, cd to the tensusers volume and replace <YOUR_USERNAME> ``` cd /vol/tensusers/<YOUR_USERNAME>/ ```.
 2. Get the install link from the [anaconda webpage](https://www.anaconda.com/distribution/#download-section) and download it using ```wget```.
-3. Once the download is complete, create a new bashrc script by using ``` nano bashrc```
+3. Once the download is complete, create a new bashrc script by using 
+```bash
+nano bashrc
+```
 4. In the bash script, put the following code and replace <USER> with your username ``` export PATH="/home/<USER>/anaconda3/bin:$PATH" ```
 5. Activate the bash script using ``` source ~/.bashrc```. This will activate the conda environment.
 6. 
