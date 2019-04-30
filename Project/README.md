@@ -37,11 +37,6 @@ The first tunnel is for the jupyter notebook itself. The second tunnel will be n
 
 5. Access Jupyter Notebook on your [own system](http://localhost:8888).
 
-## Prerequisites
-```bash
-pip install -U scikit-image
-```
-
 ## Dataset
 The dataset can be acquired [here](https://www.kaggle.com/c/histopathologic-cancer-detection/data). You can unzip the file to [./data/](data/).
 
