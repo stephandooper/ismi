@@ -7,6 +7,7 @@ from PIL import Image
 import os
 from time import time
 from tqdm import tqdm
+from IPython.core.display import display, HTML            
 
 # Suppress GPU if needed
 # os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
@@ -25,6 +26,8 @@ import pymongo
 
 from constants import MONGO_URI, RANDOM_SEED
 from data.data import load_data
+from models.resnet import build_resnet
+from models.densenet import build_dense
 
 # TODO add more parameters    
 def build_generators(batch_size=32, target_size= (96,96), only_use_subset=False):
@@ -36,21 +39,21 @@ def build_generators(batch_size=32, target_size= (96,96), only_use_subset=False)
         x_valid = x_valid[0:10000]
         y_valid = y_valid[0:10000]
         
-        x_test = x_test[0:10000]
-        y_test = y_test[0:10000]
+        x_test = x_test[0:100]
+        y_test = y_test[0:100]
     
     train_datagen = ImageDataGenerator(
         rescale=1./255,
         # Specify other augmentations here.
     )
 
-    print("Creating validation_generator")
+    print("[!] Creating validation_generator")
     validation_generator = train_datagen.flow(
         x=x_valid,
         y=np.ravel(y_valid),
         batch_size=batch_size)
 
-    print("Creating train_generator")
+    print("[!] Creating train_generator")
     train_generator = train_datagen.flow(
         x=x_train,
         y=np.ravel(y_train),
@@ -61,7 +64,7 @@ def build_generators(batch_size=32, target_size= (96,96), only_use_subset=False)
         # Specify other augmentations here.
     )
 
-    print("Creating test_generator")
+    print("[!] Creating test_generator")
     test_generator = test_datagen.flow(
         x=x_test,
         y=np.ravel(y_test),
@@ -102,7 +105,7 @@ def run_experiment(config, predict_test = True):
 
         config = _run.config
         
-        print('Loading data!')
+        print('[!] Loading data')
         
         batch_size = config.get('batch_size')
         target_size = config.get('target_size')
@@ -110,7 +113,7 @@ def run_experiment(config, predict_test = True):
         
         train_generator, validation_generator, test_generator =            build_generators(batch_size=batch_size,target_size=target_size,only_use_subset=only_use_subset)
         
-        print('Building model!')
+        print('[!] Building model')
         
         # The function for building the model
         model_func = model_dict[config.get('model')]
@@ -130,7 +133,7 @@ def run_experiment(config, predict_test = True):
 
         epochs = config.get('epochs')
         
-        print('Training model!')
+        print('[!] Training model')
 
         model.fit_generator(train_generator, 
                             steps_per_epoch=len(train_generator),
@@ -140,12 +143,15 @@ def run_experiment(config, predict_test = True):
                             callbacks=[tensorboard, LogMetrics()])
         
         if predict_test:
-            print('Predicting test set!')
+            print('[!] Predicting test set')
         
             prediction = model.predict_generator(test_generator, steps=len(test_generator), verbose=1)
-            submission = pd.read_csv('./data/sample_submission.csv')
-            submission['label'] = prediction
+            
+            data = {'case': np.arange(len(prediction)), 'prediction': np.ravel(prediction)}
+            submission = pd.DataFrame(data=data)
             submission.to_csv('./data/submission.csv', index=False)
+            
+            display(HTML('Prediction saved to file: <a target="_blank" href="./data/submission.csv">data/submission.csv</a>'))
         
             # add the submissions as an artifact
             _run.add_artifact('./data/submission.csv')
@@ -153,48 +159,6 @@ def run_experiment(config, predict_test = True):
     run = ex.run()
     
     return run
-    
-
-# TODO offer more parameters
-def build_resnet(**kwargs):
-    """
-    weights ('imagenet'): Pre-trained weights, specify None to have no pre-training.
-    
-    """
-    from keras.applications.resnet50 import ResNet50
-    from keras.layers import Dense, GlobalAveragePooling2D
-    
-    weights = kwargs.get('weights', 'imagenet')
-    
-    base_model = ResNet50(weights=weights, include_top=False)
-
-    x = base_model.output
-    x = GlobalAveragePooling2D()(x)
-    # let's add a fully-connected layer
-    x = Dense(1024, activation='relu')(x)
-    # and a logistic layer -- let's say we have 200 classes
-    predictions = Dense(1, activation='sigmoid')(x)
-
-    model = Model(inputs=base_model.input, outputs=predictions)
-    
-    return model
-
-# TODO parametrize
-def build_dense(**kwargs):
-    """
-    target_size: The size of the target images.
-    
-    """
-    target_size = kwargs.get('target_size')
-    inputs = Input(shape=(*target_size,3,))
-
-    x = Dense(64, activation='relu')(inputs)
-    x = Dense(64, activation='relu')(x)
-    x = Flatten()(x)
-    predictions = Dense(1, activation='sigmoid')(x)
-    model = Model(inputs=inputs, outputs=predictions)
-    
-    return model
 
 model_dict = {
     'dense' : build_dense,
