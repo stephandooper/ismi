@@ -30,6 +30,15 @@ from data.data import load_data
 def build_generators(batch_size=32, target_size= (96,96), only_use_subset=False):
     (x_train, y_train, meta_train), (x_valid, y_valid, meta_valid), (x_test, y_test, meta_test) = load_data()
     
+    if only_use_subset:
+        x_train = x_train[0:10000]
+        y_train = y_train[0:10000]
+        x_valid = x_valid[0:10000]
+        y_valid = y_valid[0:10000]
+        
+        x_test = x_test[0:10000]
+        y_test = y_test[0:10000]
+    
     train_datagen = ImageDataGenerator(
         rescale=1./255,
         # Specify other augmentations here.
@@ -63,7 +72,7 @@ def build_generators(batch_size=32, target_size= (96,96), only_use_subset=False)
 
     return train_generator, validation_generator, test_generator
 
-def run_experiment(config, train_generator,validation_generator,test_generator):
+def run_experiment(config, predict_test = True):
 
     ex = Experiment('ISMI', interactive=True)
     # log to the mongoDB instance living in the cloud
@@ -82,7 +91,7 @@ def run_experiment(config, train_generator,validation_generator,test_generator):
         _run.result = float(logs.get('val_acc'))
 
 
-    # a callback to log to Sacred, found here: https://www.hhllcks.de/blog/2018/5/4/version-your-machine-learning-models-with-sacred
+    # a callback to log to Sacred, found here: https://www.hhllcks.de/blog/2018    /5/4/version-your-machine-learning-models-with-sacred
     class LogMetrics(Callback):
         def on_epoch_end(self, _, logs={}):
             my_metrics(logs=logs)
@@ -92,13 +101,16 @@ def run_experiment(config, train_generator,validation_generator,test_generator):
     def run(_run):
 
         config = _run.config
-        print(fish)
-
-        print('Running experiment!')
-
+        
+        print('Loading data!')
+        
         batch_size = config.get('batch_size')
         target_size = config.get('target_size')
         only_use_subset = config.get('only_use_subset')
+        
+        train_generator, validation_generator, test_generator =            build_generators(batch_size=batch_size,target_size=target_size,only_use_subset=only_use_subset)
+        
+        print('Building model!')
         
         # The function for building the model
         model_func = model_dict[config.get('model')]
@@ -117,6 +129,8 @@ def run_experiment(config, train_generator,validation_generator,test_generator):
         tensorboard = TensorBoard(log_dir="logs/{}".format(time()))
 
         epochs = config.get('epochs')
+        
+        print('Training model!')
 
         model.fit_generator(train_generator, 
                             steps_per_epoch=len(train_generator),
@@ -124,15 +138,18 @@ def run_experiment(config, train_generator,validation_generator,test_generator):
                             validation_data=validation_generator, 
                             validation_steps=len(validation_generator),
                             callbacks=[tensorboard, LogMetrics()])
-
-        prediction = model.predict_generator(test_generator, steps = len(test_generator), verbose=1)
-        submission = pd.read_csv('./data/sample_submission.csv')
-        submission['label'] = prediction
-        submission.to_csv('./data/submission.csv', index=False)
-
-        # add the submissions as an artifact
-        _run.add_artifact('./data/submission.csv')
         
+        if predict_test:
+            print('Predicting test set!')
+        
+            prediction = model.predict_generator(test_generator, steps=len(test_generator), verbose=1)
+            submission = pd.read_csv('./data/sample_submission.csv')
+            submission['label'] = prediction
+            submission.to_csv('./data/submission.csv', index=False)
+        
+            # add the submissions as an artifact
+            _run.add_artifact('./data/submission.csv')
+            
     run = ex.run()
     
     return run
