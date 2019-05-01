@@ -28,9 +28,10 @@ from constants import MONGO_URI, RANDOM_SEED
 from data.data import load_data
 from models.resnet import build_resnet
 from models.densenet import build_dense
+from generators.augment import augmentor
 
 # TODO add more parameters    
-def build_generators(batch_size=32, target_size= (96,96), only_use_subset=False):
+def build_generators(batch_size=32, target_size= (96,96), only_use_subset=False, use_augment=False):
     (x_train, y_train, meta_train), (x_valid, y_valid, meta_valid), (x_test, y_test, meta_test) = load_data()
     
     if only_use_subset:
@@ -46,7 +47,13 @@ def build_generators(batch_size=32, target_size= (96,96), only_use_subset=False)
         rescale=1./255,
         # Specify other augmentations here.
     )
-
+    
+    if use_augment:
+        train_datagen = ImageDataGenerator(
+            rescale=1./255,
+            preprocessing_function = augmentor
+        )
+    
     print("[!] Creating validation_generator")
     validation_generator = train_datagen.flow(
         x=x_valid,
@@ -68,7 +75,7 @@ def build_generators(batch_size=32, target_size= (96,96), only_use_subset=False)
     test_generator = test_datagen.flow(
         x=x_test,
         y=np.ravel(y_test),
-        batch_size=1,
+        batch_size=32,
         seed=0,
         shuffle=False
     )
@@ -111,7 +118,9 @@ def run_experiment(config, predict_test = True):
         target_size = config.get('target_size')
         only_use_subset = config.get('only_use_subset')
         
-        train_generator, validation_generator, test_generator =            build_generators(batch_size=batch_size,target_size=target_size,only_use_subset=only_use_subset)
+        use_augment = config.get('use_augment')
+        
+        train_generator, validation_generator, test_generator =            build_generators(batch_size=batch_size,target_size=target_size,only_use_subset=only_use_subset,use_augment=use_augment)
         
         print('[!] Building model')
         
