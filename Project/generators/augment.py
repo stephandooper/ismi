@@ -4,46 +4,98 @@ Created on Mon Apr 29 17:26:09 2019
 
 @author: Stephan
 """
-
-import pandas as pd
 import numpy as np
-
 import matplotlib.pyplot as plt
 import matplotlib
-
-from tqdm import tqdm_notebook
-from PIL import Image
-
-from keras.preprocessing.image import ImageDataGenerator
+from tqdm import tqdm_noteboo
 from imgaug import augmenters as iaa
 
-aug = iaa.SomeOf((1,1), [
-    iaa.GaussianBlur(sigma = (0, 2.0)),
-    iaa.Noop(),
-    iaa.Fliplr(0.5),
-    iaa.Flipud(0.5),
-    iaa.Multiply((0.5, 1.5), per_channel=0.5)
-])
+
+'''Define the augmentation space and topology '''
+basic = iaa.SomeOf((0,None), [iaa.Affine(rotate=90) ,iaa.Fliplr(1), iaa.Flipud(1)])
+
+morphology = iaa.SomeOf((0, None), [iaa.GaussianBlur(sigma=0.9), 
+                             iaa.AdditiveGaussianNoise(scale=0.05*255),
+                             iaa.ElasticTransformation(alpha=0.35, sigma=0.5),
+                             iaa.Affine(scale=(1, 2.5))])
+
+
+bc = iaa.SomeOf((0,None), [iaa.ContrastNormalization((0.75, 1.25)), 
+                     iaa.Multiply((0.5, 1.5))])
+
+
+hsv = iaa.SomeOf((0,None),
+                 [
+                    iaa.WithColorspace(
+                    to_colorspace="HSV",
+                    from_colorspace="RGB",
+                    children=iaa.Sequential([iaa.WithChannels((1), iaa.Add((-100, 150))),
+                             iaa.WithChannels((0), iaa.Add((-100, 150)))])
+                    )
+                 ]
+                )
+
+
+def define_augmentation(p_basic=0.2, p_morph=0.2, p_bc=0.2, p_hsv=0.2):
+    '''
+    Define the image augmentation pipeline
+    
+        Parameters
+        ---
+            p_basic: probability that an augmentation of type basic will occur
+            p_morph: probability that an augmentation of type morphology will occur
+            p_bc: probability that an augmentation of type bc will occur
+            p_hsv: probability that an augmentation of type hsv will occur
+    '''
+
+    aug = iaa.Sequential(
+        [
+            iaa.Sometimes(p_basic, basic),
+            iaa.Sometimes(p_morph, morphology),
+            iaa.Sometimes(p_bc, bc),
+            iaa.Sometimes(p_hsv, hsv)
+        ]
+    )
+    return aug
 
 def augmentor(image, *args, **kwargs):
+    '''
+    Wrapper function for the augmentation
+    This function is fed into the Keras generator as an executor.
+    
+    Parameters
+    ---
+        image: the image to be (possibly) augmented
+    '''
+    aug = define_augmentation()
     image = aug.augment_image(image)
     return image
 
 
 
-def show_augmentations(datagen, x_train, y_train):
-    batches = datagen.flow(x_train[0:1], y_train[0:1], batch_size=10)
-    super_x_batch = []
-    for i in range(10):
-        x_batch, y_batch = next(batches)
-        super_x_batch.append(x_batch[0])
+def show_augmentations(img):
+    '''
+    Shows several augmentations for a single example image
     
-    # plot the results
-    matplotlib.rcParams['figure.figsize'] = (15,7)
-    fig, axes = plt.subplots(2, 5)
-    for i in range(2):
-        for j in range(5):
-            axes[i, j].imshow(super_x_batch[(i*5)+j], aspect='auto')
+    Parameters
+    ---
+        img: the example image
+            
+    '''
+    images = np.array(
+        [img for _ in range(32)],
+        dtype=np.uint8
+    )
+    
+
+    w=4
+    h=8
+    fig=plt.figure(figsize=(8, 8))
+    columns = 4
+    rows = 5
+    for i in range(1, columns*rows +1):
+        fig.add_subplot(rows, columns, i)
+        plt.imshow(augmentor(images[i]))
     plt.show()
 
 
@@ -53,29 +105,6 @@ if __name__ == '__main__':
     Shows an example of the augmentations
     
     '''
-    
-    #load training data ids
-    df_data = pd.read_csv('../data/train_labels.csv')
-    df_data['id'] = df_data['id'].astype(str) + '.tif'
-            
-    # Load data into memory, take just 1 image so the operations are clear
-    df_data_copy = df_data
-    df_data_copy = df_data_copy[3:4]
-    
-    
-    # gather training data in np array
-    x_train = []
-    y_train = np.array(df_data_copy['label'])
-    for file_path in tqdm_notebook(df_data_copy['id']):
-        x_train.append(np.array(Image.open('../data/train/{}'.format(file_path))))
-    x_train = np.array(x_train)  
-    
-    # define a generator with the augmentor
-    train_datagen = ImageDataGenerator(
-            rescale=1./255,
-            preprocessing_function = augmentor
-    )
-    
-    show_augmentations(train_datagen, x_train, y_train)
-    
+    (x_train, y_train, meta_train), (x_valid, y_valid, meta_valid), (x_test, y_test, meta_test) = load_data()
+    show_augmentations(x_train[0])
     
