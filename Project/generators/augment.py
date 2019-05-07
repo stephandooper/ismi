@@ -7,7 +7,6 @@ Created on Mon Apr 29 17:26:09 2019
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib
-from tqdm import tqdm_noteboo
 from imgaug import augmenters as iaa
 
 
