@@ -66,6 +66,7 @@ def augmentor(image, *args, **kwargs):
     ---
         image: the image to be (possibly) augmented
     '''
+    image = np.array(image)
     aug = define_augmentation()
     image = aug.augment_image(image)
     return image
