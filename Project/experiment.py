@@ -10,13 +10,13 @@ from tqdm import tqdm
 from IPython.core.display import display, HTML            
 
 # Suppress GPU if needed
-# os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
+#os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 os.environ['HDF5_USE_FILE_LOCKING'] = 'FALSE'
 
 from keras.layers import Input, Dense, Flatten
 from keras.models import Model
 from keras.preprocessing.image import ImageDataGenerator
-from keras.callbacks import TensorBoard, Callback
+from keras.callbacks import TensorBoard, Callback, ReduceLROnPlateau, ModelCheckpoint, EarlyStopping
 
 from skimage import exposure
 
@@ -28,6 +28,8 @@ from constants import MONGO_URI, RANDOM_SEED
 from data.data import load_data
 from models.resnet import build_resnet
 from models.densenet import build_dense
+from models.nasnet import build_nasnet
+from models.convnet import build_convnet
 from generators.augment import augmentor
 
 # TODO add more parameters    
@@ -101,7 +103,7 @@ def run_experiment(config, predict_test = True):
         _run.result = float(logs.get('val_acc'))
 
 
-    # a callback to log to Sacred, found here: https://www.hhllcks.de/blog/2018    /5/4/version-your-machine-learning-models-with-sacred
+    # a callback to log to Sacred, found here: https://www.hhllcks.de/blog/2018    /5/4/version-your-machine--models-with-sacred
     class LogMetrics(Callback):
         def on_epoch_end(self, _, logs={}):
             my_metrics(logs=logs)
@@ -137,23 +139,37 @@ def run_experiment(config, predict_test = True):
 
         # TODO: parametrize optimizer and learning rate here
         model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+        
+        print(model.summary())
 
         tensorboard = TensorBoard(log_dir="logs/{}".format(time()))
 
         epochs = config.get('epochs')
         
         print('[!] Training model')
+        # Reduce learning rate on plateau
+        if config.get('reduce_lr_on_plateau'):
+            reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=4, min_lr=10e-5)
+        else: 
+            reduce_lr = Callback()
+        
+        # Save best models to file
+        modelcheckpoint_name = "checkpoints/model-{}.hdf5".format(time())
+        modelcheckpoint = ModelCheckpoint(modelcheckpoint_name, monitor='val_loss', verbose=1, save_best_only=True, save_weights_only=True)
+        
+        # Stop early when val_loss does not increase anymore
+        earlystopping = EarlyStopping(monitor='val_loss', patience=10)
 
         model.fit_generator(train_generator, 
                             steps_per_epoch=len(train_generator),
                             epochs=epochs, 
                             validation_data=validation_generator, 
                             validation_steps=len(validation_generator),
-                            callbacks=[tensorboard, LogMetrics()])
+                            callbacks=[tensorboard, LogMetrics(), modelcheckpoint, earlystopping])
         
         if predict_test:
             print('[!] Predicting test set')
-        
+            model.load_weights(modelcheckpoint_name)
             prediction = model.predict_generator(test_generator, steps=len(test_generator), verbose=1)
             
             data = {'case': np.arange(len(prediction)), 'prediction': np.ravel(prediction)}
@@ -171,7 +187,9 @@ def run_experiment(config, predict_test = True):
 
 model_dict = {
     'dense' : build_dense,
-    'resnet': build_resnet 
+    'resnet': build_resnet, 
+    'nasnet': build_nasnet,
+    'convnet': build_convnet
 }
     
 
