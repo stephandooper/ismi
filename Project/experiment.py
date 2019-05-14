@@ -30,7 +30,6 @@ from models.resnet import build_resnet
 from models.densenet import build_dense
 from models.nasnet import build_nasnet
 from models.convnet import build_convnet
-from models.simple_convnet import build_simple_convnet
 from generators.augment import augmentor
 
 # TODO add more parameters    
