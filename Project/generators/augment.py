@@ -66,9 +66,8 @@ def augmentor(image, *args, **kwargs):
     ---
         image: the image to be (possibly) augmented
     '''
-    print(image.shape)
-    print(image.dtype)
-    print(image.dtype)
+    #print(image.shape)
+    #print(image.dtype)
     image = image.astype('uint8')
     image = np.array(image)
     
