@@ -189,8 +189,7 @@ model_dict = {
     'dense' : build_dense,
     'resnet': build_resnet, 
     'nasnet': build_nasnet,
-    'convnet': build_convnet,
-    'simple_convnet': build_simple_convnet
+    'convnet': build_convnet
 }
     
 
