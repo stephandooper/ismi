@@ -3,7 +3,7 @@
 
 | Architecture | Augmented | Val_acc | Val_loss | Test_acc | Run time |
 | ----- | ----- | --- | --- | --- | --- |
-[ConvNet](https://arxiv.org/pdf/1902.06543.pdf) | True | 0.8271 | 0.3864 | 0.9434 | 1 h 1 m 33s
-[ConvNet](https://arxiv.org/pdf/1902.06543.pdf) | False | | | | 
+[ConvNet](https://arxiv.org/pdf/1902.06543.pdf) | True | 0.8271 | 0.3864 | 0.9434 | 1:15:28
+[ConvNet](https://arxiv.org/pdf/1902.06543.pdf) | False | 0.8661 | 0.3136 | - |  0:57:10 | 
 DenseNet (2x 64 HU) | 
 ResNet50 |
