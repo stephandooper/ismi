@@ -13,23 +13,21 @@ from imgaug import augmenters as iaa
 '''Define the augmentation space and topology '''
 basic = iaa.SomeOf((0,None), [iaa.Affine(rotate=90) ,iaa.Fliplr(1), iaa.Flipud(1)])
 
-morphology = iaa.SomeOf((0, None), [iaa.GaussianBlur(sigma=0.9), 
-                             iaa.AdditiveGaussianNoise(scale=0.05*255),
-                             iaa.ElasticTransformation(alpha=0.35, sigma=0.5),
-                             iaa.Affine(scale=(1, 2.5))])
+morphology = iaa.SomeOf((0,None),[iaa.GaussianBlur(sigma=(0.0, 0.35)),
+                             iaa.AdditiveGaussianNoise(scale=(0, 0.07*255)),
+                             iaa.ElasticTransformation(alpha=(0, 0.55), sigma=0.25),
+                             iaa.Affine(scale=(1, 1.25))])
 
-
-bc = iaa.SomeOf((0,None), [iaa.ContrastNormalization((0.75, 1.25)), 
-                     iaa.Multiply((0.5, 1.5))])
-
+bc = iaa.SomeOf((0,None), [iaa.ContrastNormalization((0.65, 1.35)),
+                     iaa.Multiply((0.9, 1.1))])
 
 hsv = iaa.SomeOf((0,None),
                  [
                     iaa.WithColorspace(
                     to_colorspace="HSV",
                     from_colorspace="RGB",
-                    children=iaa.Sequential([iaa.WithChannels((1), iaa.Add((-100, 150))),
-                             iaa.WithChannels((0), iaa.Add((-100, 150)))])
+                    children=iaa.Sequential([iaa.WithChannels((1), iaa.Add((-20, 20))),
+                             iaa.WithChannels((0), iaa.Add((-20, 20)))])
                     )
                  ]
                 )
