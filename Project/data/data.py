@@ -38,7 +38,7 @@ def load_data():
     # Returns
         Tuple of Numpy arrays: `(x_train, y_train), (x_test, y_test)`.
     """
-    dirname = '/scratch/tdeboer/ismi/Project/data/'
+    dirname = '/vol/tensusers2/tdeboer/ismi/Project/data/'
     base = 'https://drive.google.com/uc?export=download&id='
     try:
         y_train = HDF5Matrix(get_file('camelyonpatch_level_2_split_train_y.h5', origin= base+ '1269yhu3pZDP8UYFQs-NYs3FPwuK-nGSG', cache_subdir=dirname, archive_format='gzip'), 'y')
