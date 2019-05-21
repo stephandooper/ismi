@@ -1,3 +1,19 @@
+# DenseNet parameters
+
+## Terminology
+
+The conv group parameter has a confusing naming scheme.
+
+| Code               | Paper  | Meaning            
+|----|--|---------------------|
+| C4 | P4 | 4 rotations |
+| D4 | P4M | 8 transformations (4 rotations * mirroring) |
+
+
+
+
+## Parameters (in the code)
+
 | Parameter               | Description                                            | Default             | Effect |
 |-------------------------|--------------------------------------------------------|---------------------|--------|
 | depth                   | Total number of layers in the DenseNet                 |          40         |        |
@@ -15,3 +31,4 @@
 | classes                 | Number of classes                                      |          10         |        |
 | activation              | Activation function at the final FC layer              |       softmax       |        |
 | use_gcnn                | Whether to use rotation-invariant CNN layers           |       False         |        |
+| conv_group              | What kind of transformations to use with RE conv       |         C4          |        |
