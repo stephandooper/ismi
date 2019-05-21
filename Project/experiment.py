@@ -30,6 +30,7 @@ from models.resnet import build_resnet
 from models.densenet import build_dense
 from models.nasnet import build_nasnet
 from models.convnet import build_convnet
+from models.recnn import build_recnn
 from generators.augment import augmentor
 
 # TODO add more parameters    
@@ -189,7 +190,8 @@ model_dict = {
     'dense' : build_dense,
     'resnet': build_resnet, 
     'nasnet': build_nasnet,
-    'convnet': build_convnet
+    'convnet': build_convnet,
+    'recnn': build_recnn
 }
     
 
