@@ -1,25 +1,181 @@
-from keras.layers import Input, Dense, Flatten
+from keras import layers, Input
 from keras.models import Model
 
-def build_nasnet(**kwargs):
-    """
-    weights ('imagenet'): Pre-trained weights, specify None to have no pre-training.
-    
-    """
-    from keras.applications.nasnet import NASNetLarge
-    from keras.layers import Dense, GlobalAveragePooling2D
-    
-    weights = kwargs.get('weights', 'imagenet')
-    
-    base_model = NASNetLarge(weights=weights, include_top=False, input_shape=(*kwargs.get('target_size', (96, 96)), 3))
+def build_nasnet(**kwargs):  
+      
+    inputs = Input((96, 96, 3))
 
-    x = base_model.output
-    x = GlobalAveragePooling2D()(x)
-    # let's add a fully-connected layer
-    x = Dense(1024, activation='relu')(x)
-    # and a logistic layer -- let's say we have 200 classes
-    predictions = Dense(1, activation='sigmoid')(x)
+    x1 = layers.Conv2D(32,3,padding='same')(inputs)
+    x1 = layers.BatchNormalization()(x1)
+    x1 = layers.Activation('relu')(x1)
+    x1 = layers.Conv2D(32,3,padding='same')(x1)
+    x1 = layers.BatchNormalization()(x1)
+    x1 = layers.Activation('relu')(x1)
+    x1 = layers.Conv2D(32,3,padding='same')(x1)
+    x1 = layers.BatchNormalization()(x1)
+    x1 = layers.Activation('relu')(x1)
+    #     x1 = layers.MaxPool2D(2,2)(x1)  
 
-    model = Model(inputs=base_model.input, outputs=predictions)
+    x1_s = layers.SeparableConv2D(32,3,padding='same')(inputs)
+    x1_s = layers.BatchNormalization()(x1_s)
+    x1_s = layers.Activation('relu')(x1_s)
+    x1_s = layers.SeparableConv2D(32,3,padding='same')(x1_s)
+    x1_s = layers.BatchNormalization()(x1_s)
+    x1_s = layers.Activation('relu')(x1_s)    
+    x1_s = layers.SeparableConv2D(32,3,padding='same')(x1_s)
+    x1_s = layers.BatchNormalization()(x1_s)
+    x1_s = layers.Activation('relu')(x1_s)
+    concetenated_0 = layers.concatenate([x1,x1_s])
+
+    x2 = layers.Conv2D(64,3,padding='same')(concetenated_0)
+    x2 = layers.BatchNormalization()(x2)
+    x2 = layers.Activation('relu')(x2)
+    x2 = layers.Conv2D(64,3,padding='same')(x2)
+    x2 = layers.BatchNormalization()(x2)
+    x2 = layers.Activation('relu')(x2)
+    x2 = layers.Conv2D(64,3,padding='same')(x2)
+    x2 = layers.BatchNormalization()(x2)
+    x2 = layers.Activation('relu')(x2)
+    residual_concetenated_0 = layers.Conv2D(64,1,strides=1,padding='same')(concetenated_0)
+    x2 = layers.add([x2,residual_concetenated_0])
+    concetenates_x2_x1_s = layers.concatenate([x2,x1_s])
+    x2 = layers.MaxPool2D(2,2)(concetenates_x2_x1_s)
+    
+    x2_s = layers.SeparableConv2D(64,3,padding='same')(x2)
+    x2_s = layers.BatchNormalization()(x2_s)
+    x2_s = layers.Activation('relu')(x2_s)
+    x2_s = layers.SeparableConv2D(64,3,padding='same')(x2_s)
+    x2_s= layers.BatchNormalization()(x2_s)
+    x2_s= layers.Activation('relu')(x2_s)
+    x2_s = layers.SeparableConv2D(64,3,padding='same')(x2_s)
+    x2_s= layers.BatchNormalization()(x2_s)
+    x2_s= layers.Activation('relu')(x2_s)
+    x2_s = layers.Conv2D(96,1,strides=1,padding='same')(x2_s)
+    x2_s = layers.add([x2_s,x2]) 
+    x2_s = layers.MaxPool2D(2,2)(x2_s)
+    
+    x3 = layers.Conv2D(128,3,padding='same')(x2)
+    x3 = layers.BatchNormalization()(x3)
+    x3 = layers.Activation('relu')(x3)
+    x3 = layers.Conv2D(128,3,padding='same')(x3)
+    x3 = layers.BatchNormalization()(x3)
+    x3 = layers.Activation('relu')(x3)
+    x3 = layers.Conv2D(128,3,padding='same')(x3)
+    x3 = layers.BatchNormalization()(x3)
+    x3 = layers.Activation('relu')(x3)
+    residual_x2 = layers.Conv2D(128,1,strides=1,padding='same')(x2)
+    x3 = layers.add([residual_x2,x3]) 
+    
+    x3_x3 = layers.Conv2D(128,3,padding='same')(x3)
+    x3_x3 = layers.BatchNormalization()(x3_x3)
+    x3_x3 = layers.Activation('relu')(x3_x3)
+    x3_x3 = layers.Conv2D(128,3,padding='same')(x3_x3)
+    x3_x3 = layers.BatchNormalization()(x3_x3)
+    x3_x3 = layers.Activation('relu')(x3_x3)
+    x3_x3 = layers.Conv2D(128,3,padding='same')(x3_x3)
+    x3_x3 = layers.BatchNormalization()(x3_x3)
+    x3_x3 = layers.Activation('relu')(x3_x3)
+    x3_x3 = layers.add([x3,x3_x3]) 
+    x3_x3 = layers.MaxPool2D(2,2)(x3_x3)
+    
+    
+    concetenated_1 = layers.concatenate([x3_x3,x2_s])
+    x3_s = layers.SeparableConv2D(128,3,padding='same')(concetenated_1)
+    x3_s = layers.BatchNormalization()(x3_s)
+    x3_s = layers.Activation('relu')(x3_s)
+    x3_s = layers.SeparableConv2D(128,3,padding='same')(x3_s)
+    x3_s= layers.BatchNormalization()(x3_s)
+    x3_s= layers.Activation('relu')(x3_s)
+    x3_s = layers.SeparableConv2D(128,3,padding='same')(x3_s)
+    x3_s= layers.BatchNormalization()(x3_s)
+    x3_s= layers.Activation('relu')(x3_s)
+    x3_s = layers.add([x3_s,x3_x3]) 
+    x3_s = layers.MaxPool2D(2,2)(x3_s)
+    
+    x4 = layers.Conv2D(256,3,padding='same')(x3_x3)
+    x4 = layers.BatchNormalization()(x4)
+    x4 = layers.Activation('relu')(x4)
+    x4 = layers.Conv2D(256,3,padding='same')(x4)
+    x4 = layers.BatchNormalization()(x4)
+    x4 = layers.Activation('relu')(x4)
+    x4 = layers.Conv2D(256,3,padding='same')(x4)
+    x4 = layers.BatchNormalization()(x4)
+    x4 = layers.Activation('relu')(x4)
+    residual_x3 = layers.Conv2D(256,1,strides=1,padding='same')(x3_x3)
+    x4 = layers.add([residual_x3,x4]) 
+    
+    x4_x4 = layers.Conv2D(256,3,padding='same')(x4)
+    x4_x4 = layers.BatchNormalization()(x4_x4)
+    x4_x4 = layers.Activation('relu')(x4_x4)
+    x4_x4 = layers.Conv2D(256,3,padding='same')(x4_x4)
+    x4_x4 = layers.BatchNormalization()(x4_x4)
+    x4_x4 = layers.Activation('relu')(x4_x4)
+    x4_x4 = layers.Conv2D(256,3,padding='same')(x4_x4)
+    x4_x4 = layers.BatchNormalization()(x4_x4)
+    x4_x4 = layers.Activation('relu')(x4_x4)
+    x4_x4 = layers.add([x4,x4_x4]) 
+    x4_x4 = layers.MaxPool2D(2,2)(x4_x4)
+    
+
+    concetenated_2 = layers.concatenate([x4_x4,x3_s])
+    x4_s = layers.SeparableConv2D(256,3,padding='same')(concetenated_2)
+    x4_s = layers.BatchNormalization()(x4_s)
+    x4_s = layers.Activation('relu')(x4_s)
+    x4_s = layers.SeparableConv2D(256,3,padding='same')(x4_s)
+    x4_s= layers.BatchNormalization()(x4_s)
+    x4_s= layers.Activation('relu')(x4_s)
+    x4_s = layers.SeparableConv2D(256,3,padding='same')(x4_s)
+    x4_s= layers.BatchNormalization()(x4_s)
+    x4_s= layers.Activation('relu')(x4_s)
+    x4_s = layers.add([x4_s,x4_x4]) 
+    x4_s = layers.MaxPool2D(2,2)(x4_s)
+    
+    x5 = layers.Conv2D(512,3,padding='same')(x4_x4)
+    x5 = layers.BatchNormalization()(x5)
+    x5 = layers.Activation('relu')(x5)
+    x5 = layers.Conv2D(512,3,padding='same')(x5)
+    x5 = layers.BatchNormalization()(x5)
+    x5 = layers.Activation('relu')(x5)
+    x5 = layers.Conv2D(512,3,padding='same')(x5)
+    x5 = layers.BatchNormalization()(x5)
+    x5 = layers.Activation('relu')(x5)
+    residual_x4 = layers.Conv2D(512,1,strides=1,padding='same')(x4_x4)
+    x5 = layers.add([residual_x4,x5])
+
+    x5_x5 = layers.Conv2D(512,3,padding='same')(x5)
+    x5_x5 = layers.BatchNormalization()(x5_x5)
+    x5_x5 = layers.Activation('relu')(x5_x5)
+    x5_x5 = layers.Conv2D(512,3,padding='same')(x5_x5)
+    x5_x5 = layers.BatchNormalization()(x5_x5)
+    x5_x5 = layers.Activation('relu')(x5_x5)
+    x5_x5 = layers.Conv2D(512,3,padding='same')(x5_x5)
+    x5_x5 = layers.BatchNormalization()(x5_x5)
+    x5_x5 = layers.Activation('relu')(x5_x5)
+    x5_x5 = layers.add([x5,x5_x5])
+    x5_x5 = layers.MaxPool2D(2,2)(x5_x5)
+    
+    concetenated_3 = layers.concatenate([x5_x5,x4_s])
+    x5_s = layers.SeparableConv2D(512,3,padding='same')(concetenated_3)
+    x5_s = layers.BatchNormalization()(x5_s)
+    x5_s = layers.Activation('relu')(x5_s)
+    x5_s = layers.SeparableConv2D(512,3,padding='same')(x5_s)
+    x5_s= layers.BatchNormalization()(x5_s)
+    x5_s= layers.Activation('relu')(x5_s)
+    x5_s = layers.SeparableConv2D(512,3,padding='same')(x5_s)
+    x5_s= layers.BatchNormalization()(x5_s)
+    x5_s= layers.Activation('relu')(x5_s)
+    x5_s = layers.add([x5_s,x5_x5]) 
+
+    x = layers.GlobalAveragePooling2D()(x5_s)
+
+    x = layers.Dense(64)(x)
+    x = layers.BatchNormalization()(x)
+    x = layers.Activation('relu')(x)
+    x = layers.Dropout(0.3)(x)
+    
+    output_tensor = layers.Dense(1,activation='sigmoid')(x)
+
+    model = Model(inputs,output_tensor)
     
     return model
+
