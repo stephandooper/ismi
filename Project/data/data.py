@@ -39,7 +39,8 @@ def load_data():
         Tuple of Numpy arrays: `(x_train, y_train), (x_test, y_test)`.
     """
     #dirname = '/scratch/tdeboer/ismi/Project/data/'
-    dirname = 'patchcamelyon/'
+    #dirname = 'patchcamelyon/'
+    dirname = '/vol/tensusers2/tdeboer/ismi/Project/data/'
 
     base = 'https://drive.google.com/uc?export=download&id='
     try:

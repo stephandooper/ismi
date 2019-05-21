@@ -27,8 +27,9 @@ You can make a centralized database (MongoDB). Whenever you run an experiment, t
 **Final Score vs Scientific Contribution**
 You’re not improving the world. Trying new ways for us to experiment, where you can run into obstacles, and thus learn from, then it would be nice, as you would learn much. Try to do the basis first, as this can be difficult as well.
 
-Next meeting: Tuesday April 30, 10:30 - 11:30. Goal: present first results
-Tuesday May 7: 13:00 - 14:00 
-Tuesday May 14: 12:00 - 13:00 (Skype)
-Tuesday May 21: 13:00 - 14:00 
-
+* Next meeting: Tuesday April 30, 10:30 - 11:30. Goal: present first results
+* Tuesday May 7: 13:00 - 14:00 
+* Tuesday May 14: 12:00 - 13:00 (Skype)
+* Tuesday May 21: 13:00 - 14:00 
+* Wednesday May 28: 12:00 - 13:00
+* Tuesday June 4 10:00 - 11:00 
