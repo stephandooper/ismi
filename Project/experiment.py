@@ -30,12 +30,10 @@ from models.resnet import build_resnet
 from models.densenet import build_dense
 from models.nasnet import build_nasnet
 from models.convnet import build_convnet
-<<<<<<< HEAD
 from models.capsnet import build_capsnet
 from models.convnet_reg import build_convnet_reg
-=======
 from models.recnn import build_recnn
->>>>>>> 202d3caf0e436fafe6a62c6e0dd15e46d0f611e1
+
 from generators.augment import augmentor
 from keras.preprocessing.image import ImageDataGenerator, NumpyArrayIterator
 
@@ -326,12 +324,9 @@ model_dict = {
     'resnet': build_resnet, 
     'nasnet': build_nasnet,
     'convnet': build_convnet,
-<<<<<<< HEAD
     'convnet_reg': build_convnet_reg,
     'capsnet': build_capsnet
-=======
     'recnn': build_recnn
->>>>>>> 202d3caf0e436fafe6a62c6e0dd15e46d0f611e1
 }
     
 
