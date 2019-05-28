@@ -20,7 +20,7 @@ The conv group (essentially the type of rotation equivariance) parameter has a c
 | depth                   | Total number of layers in the DenseNet                 |          40         |    If not specified, computed from nb_dense_block and nb_layers_per_block, maybe this is preferable   |
 | nb_dense_block          | Dense blocks added to the end                          |          3          |    Veeling seems to be using 5 dense blocks throughout    |
 | nb_filter               | Initial number of filters (in the dense block?)        |   2 * growth_rate   |    Veeling seems to be using 8 initial filters    |
-| growth_rate (k)         | How many filters are added to the number per block     |          12         |  Huang states a small number usually works well,  Veeling uses 24, 48 and 64 in the paper (right k?)    |
+| growth_rate (k)         | How many filters are added to the number per block     |          12         |  Huang states a small number usually works well (like 12),  Veeling's K = growth_rate * 4 for C4 / * 8 for D4    |
 | nb_layers_per_block     | How many layers within each dense block                | Computed from depth |    Veeling uses one layer per dense block    |
 | bottleneck              | If True, bottleneck blocks will be added               |        False        |    Nothing mentioned about this by Veeling, so keep it false    |
 | reduction               | Factor within transition blocks                        |         0.0         |    Nothing mentioned, so keep it 0.0    |
