@@ -1,7 +1,34 @@
 Add configurations that you want to run to this list. I'll pull the repository before every run and update this book with results and `run_id`.
+# ResNet
 
 # NasNet
+## Pre-trained
+```python
+config = {'model': 'nasnet',
+               'use_augment': True,
+               'model_params': {'weights': 'imagenet'},
+               'epochs': 10,
+               'batch_size': 32,
+               'target_size':(96,96),
+               'reduce_lr_on_plateau': True,
+               'only_use_subset':False}
 
+run_experiment(config, predict_test="nasnet_pretrained", predict_val="nasnet_pretrained")
+```
+
+## Not pre-trained
+```python
+config = {'model': 'nasnet',
+               'use_augment': True,
+               'model_params': {'weights': None},
+               'epochs': 10,
+               'batch_size': 32,
+               'target_size':(96,96),
+               'reduce_lr_on_plateau': True,
+               'only_use_subset':False}
+
+run_experiment(config, predict_test="nasnet_non_pretrained", predict_val="nasnet_non_pretrained")
+```
 # ConvNet
 ## Augmentation (70 minutes)
 ```python
