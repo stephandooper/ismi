@@ -17,12 +17,12 @@ def build_recnn(**kwargs):
     
     """
     depth = kwargs.get('depth', 22)
-    nb_dense_block = kwargs.get(nb_dense_block, 1)
-    growth_rate = kwargs.get(growth_rate, 3)  # number of z2 maps equals growth_rate * group_size, so keep this small.
-    nb_filter = kwargs.get(nb_filter, 8)
-    dropout_rate = kwargs.get(dropout_rate, 0.0)  # 0.0 for data augmentation
-    conv_group = kwargs.get(conv_group, 'D4')  # C4 includes 90 degree rotations, D4 additionally includes reflections in x and y axis.
-    use_gcnn = kwargs.get(use_gcnn, True)
+    nb_dense_block = kwargs.get('nb_dense_block', 1)
+    growth_rate = kwargs.get('growth_rate', 3)  # number of z2 maps equals growth_rate * group_size, so keep this small.
+    nb_filter = kwargs.get('nb_filter', 8)
+    dropout_rate = kwargs.get('dropout_rate', 0.0)  # 0.0 for data augmentation
+    conv_group = kwargs.get('conv_group', 'D4')  # C4 includes 90 degree rotations, D4 additionally includes reflections in x and y axis.
+    use_gcnn = kwargs.get('use_gcnn', True)
     target_size = kwargs.get('target_size', (96,96))
     input_size = (target_size[0], target_size[1], 3)
 
