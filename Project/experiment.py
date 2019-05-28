@@ -32,7 +32,7 @@ from models.nasnet import build_nasnet
 from models.convnet import build_convnet
 from models.capsnet import build_capsnet
 from models.convnet_reg import build_convnet_reg
-from models.recnn import build_recnn
+# from models.recnn import build_recnn
 
 from generators.augment import augmentor
 from keras.preprocessing.image import ImageDataGenerator, NumpyArrayIterator
@@ -255,7 +255,6 @@ def run_experiment(config, predict_test = True):
         only_use_subset = config.get('only_use_subset')
         
         use_augment = config.get('use_augment')
-        
         train_generator, validation_generator, test_generator =            build_generators(batch_size=batch_size,target_size=target_size,only_use_subset=only_use_subset,use_augment=use_augment,use_capsnet=use_capsnet)
         
         print('[!] Building model')
@@ -293,7 +292,6 @@ def run_experiment(config, predict_test = True):
         
         # Stop early when val_loss does not increase anymore
         earlystopping = EarlyStopping(monitor='val_loss', patience=10)
-
         model.fit_generator(train_generator, 
                             steps_per_epoch=len(train_generator),
                             epochs=epochs, 
@@ -305,12 +303,13 @@ def run_experiment(config, predict_test = True):
             print('[!] Predicting test set')
             model.load_weights(modelcheckpoint_name)
             prediction = model.predict_generator(test_generator, steps=len(test_generator), verbose=1)
-            
+            if config.get('use_capsnet'):
+                prediction = prediction[0]
             data = {'case': np.arange(len(prediction)), 'prediction': np.ravel(prediction)}
             submission = pd.DataFrame(data=data)
-            submission.to_csv('./data/submission.csv', index=False)
+            submission.to_csv('./data/{}.csv'.format(predict_test), index=False)
             
-            display(HTML('Prediction saved to file: <a target="_blank" href="./data/submission.csv">data/submission.csv</a>'))
+            display(HTML('Prediction saved to file: <a target="_blank" href="./data/{}.csv">data/{}.csv</a>'.format(predict_test, predict_test)))
         
             # add the submissions as an artifact
             _run.add_artifact('./data/{}.csv'.format(predict_test))
@@ -325,8 +324,8 @@ model_dict = {
     'nasnet': build_nasnet,
     'convnet': build_convnet,
     'convnet_reg': build_convnet_reg,
-    'capsnet': build_capsnet
-    'recnn': build_recnn
+    'capsnet': build_capsnet#,
+    #'recnn': build_recnn
 }
     
 
