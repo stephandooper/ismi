@@ -1,3 +1,5 @@
+Add configurations that you want to run to this list. I'll pull the repository before every run and update this book with results and `run_id`.
+
 # NasNet
 
 # Capsnet
@@ -27,7 +29,7 @@ config = {'model': 'recnn',
 
 run_experiment(config, predict_test="recnn_augmentation")
 ```
-## Without Augmentation
+## Without Augmentation [RUNNING]
 ```python
 config = {'model': 'recnn',
                'use_augment': False,           
