@@ -11,12 +11,16 @@ from imgaug import augmenters as iaa
 
 
 '''Define the augmentation space and topology '''
+
+
 basic = iaa.SomeOf((0,None), [iaa.Affine(rotate=90) ,iaa.Fliplr(1), iaa.Flipud(1)])
 
-morphology = iaa.SomeOf((0,None),[iaa.GaussianBlur(sigma=(0.0, 0.35)),
-                             iaa.AdditiveGaussianNoise(scale=(0, 0.07*255)),
-                             iaa.ElasticTransformation(alpha=(0, 0.55), sigma=0.25),
+morphology = iaa.SomeOf((0,None),[iaa.GaussianBlur(sigma=(0.0, 0.7)),
+                             iaa.AdditiveGaussianNoise(scale=(0, 0.09*255)),
+                             iaa.ElasticTransformation(alpha=(0, 0.65), sigma=0.25),
                              iaa.Affine(scale=(1, 1.25))])
+
+
 
 bc = iaa.SomeOf((0,None), [iaa.ContrastNormalization((0.65, 1.35)),
                      iaa.Multiply((0.9, 1.1))])
@@ -31,6 +35,7 @@ hsv = iaa.SomeOf((0,None),
                     )
                  ]
                 )
+
 
 
 def define_augmentation(p_basic=0.2, p_morph=0.2, p_bc=0.2, p_hsv=0.2):
