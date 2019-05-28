@@ -29,7 +29,7 @@ config = {'model': 'nasnet',
 
 run_experiment(config, predict_test="nasnet_non_pretrained", predict_val="nasnet_non_pretrained")
 ```
-# ConvNet
+# ConvNet [RUNNING]
 ## Augmentation (70 minutes)
 ```python
 config = {'model': 'convnet',
@@ -41,6 +41,11 @@ config = {'model': 'convnet',
                'only_use_subset':False}
 
 run_experiment(config, predict_test="convnet_augmentation", predict_val="convnet_augmentation")
+```
+
+```console
+INFO - ISMI - Started run with ID "231"
+
 ```
 ## No augumentation (70 minutes)
 ```python
@@ -84,7 +89,8 @@ config = {'model': 'recnn',
 
 run_experiment(config, predict_test="recnn_augmentation", predict_val="recnn_augmentation")
 ```
-## Without Augmentation [RUNNING] (7 hours)
+## Without Augmentation [STOPPED] (7 hours)
+Stopped because Klaus is still updating the architecture.
 ```python
 config = {'model': 'recnn',
                'use_augment': False,           
