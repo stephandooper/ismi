@@ -32,7 +32,7 @@ from models.nasnet import build_nasnet
 from models.convnet import build_convnet
 from models.capsnet import build_capsnet
 from models.convnet_reg import build_convnet_reg
-# from models.recnn import build_recnn
+from models.recnn import build_recnn
 
 from generators.augment import augmentor
 from keras.preprocessing.image import ImageDataGenerator, NumpyArrayIterator
@@ -210,7 +210,7 @@ def build_generators(batch_size=32, target_size= (96,96), only_use_subset=False,
 
     return train_generator, validation_generator, test_generator
 
-def run_experiment(config, predict_test = True):
+def run_experiment(config, predict_test = False, predict_val = False):
 
     ex = Experiment('ISMI', interactive=True)
     # log to the mongoDB instance living in the cloud
@@ -298,7 +298,16 @@ def run_experiment(config, predict_test = True):
                             validation_data=validation_generator, 
                             validation_steps=len(validation_generator),
                             callbacks=[tensorboard, LogMetrics(), modelcheckpoint, earlystopping])
-        
+        if predict_val: 
+            print('[!] Predicting validation set')
+            model.load_weights(modelcheckpoint_name)
+            prediction = model.predict_generator(validation_generator, steps=len(validation_generator), verbose=1)
+            if config.get('use_capsnet'):
+                prediction = prediction[0]
+            data = {'case': np.arange(len(prediction)), 'prediction': np.ravel(prediction)}
+            submission = pd.DataFrame(data=data)
+            submission.to_csv('./predictions/validation_{}.csv'.format(predict_val), index=False)
+            
         if predict_test:
             print('[!] Predicting test set')
             model.load_weights(modelcheckpoint_name)
@@ -307,12 +316,14 @@ def run_experiment(config, predict_test = True):
                 prediction = prediction[0]
             data = {'case': np.arange(len(prediction)), 'prediction': np.ravel(prediction)}
             submission = pd.DataFrame(data=data)
-            submission.to_csv('./data/{}.csv'.format(predict_test), index=False)
+            submission.to_csv('./predictions/test_{}.csv'.format(predict_test), index=False)
             
-            display(HTML('Prediction saved to file: <a target="_blank" href="./data/{}.csv">data/{}.csv</a>'.format(predict_test, predict_test)))
+            display(HTML('Prediction saved to file: <a target="_blank" href="./predictions/test_{}.csv">data/{}.csv</a>'.format(predict_test, predict_test)))
         
             # add the submissions as an artifact
-            _run.add_artifact('./data/{}.csv'.format(predict_test))
+            _run.add_artifact('./predictions/validation_{}.csv'.format(predict_val))
+            _run.add_artifact('./predictions/test_{}.csv'.format(predict_test))
+
             
     run = ex.run()
     
@@ -324,8 +335,8 @@ model_dict = {
     'nasnet': build_nasnet,
     'convnet': build_convnet,
     'convnet_reg': build_convnet_reg,
-    'capsnet': build_capsnet#,
-    #'recnn': build_recnn
+    'capsnet': build_capsnet,
+    'recnn': build_recnn
 }
     
 
