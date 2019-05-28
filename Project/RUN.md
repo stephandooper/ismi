@@ -41,4 +41,8 @@ config = {'model': 'recnn',
 run_experiment(config, predict_test="recnn_no_augmentation")
 ```
 
+```console
+INFO - ISMI - Started run with ID "225"
+```
+
 # 
