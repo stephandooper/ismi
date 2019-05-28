@@ -33,6 +33,18 @@ conda activate ismi19
 ```
 Now, the complete environment will be copied.
 
+### Install dependency for ReCNN
+Install the fixed version from the fork of Bas Veeling's repo
+```
+pip install git+https://github.com/nom/GrouPy#egg=GrouPy -e git+https://github.com/CreateRandom/keras-gcnn.git#egg=keras_gcnn 
+```
+
+Install contrib for Keras because Bas' code imports something from it
+```
+pip install git+https://www.github.com/keras-team/keras-contrib.git
+```
+
+
 ## Running a Jupyter Notebook on Ponyland
 In order to run a jupyter notebook on the server, we need to tunnel the network traffic through applejack. 
 
