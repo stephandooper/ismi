@@ -14,7 +14,7 @@ config = {'model': 'capsnet',
                'target_size':(96,96),
                'only_use_subset':False}
 
-run_experiment(config, predict_test="capsnet_10epochs")
+run_experiment(config, predict_test="capsnet_10epochs", predict_val="capsnet_10epochs")
 ```
 
 # ReCNN
@@ -27,7 +27,7 @@ config = {'model': 'recnn',
                'target_size':(96,96),
                'only_use_subset':False}
 
-run_experiment(config, predict_test="recnn_augmentation")
+run_experiment(config, predict_test="recnn_augmentation", predict_val="recnn_augmentation")
 ```
 ## Without Augmentation [RUNNING]
 ```python
@@ -38,7 +38,7 @@ config = {'model': 'recnn',
                'target_size':(96,96),
                'only_use_subset':False}
 
-run_experiment(config, predict_test="recnn_no_augmentation")
+run_experiment(config, predict_test="recnn_no_augmentation", predict_val="recnn_no_augmentation")
 ```
 
 ```console
