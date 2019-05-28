@@ -42,6 +42,11 @@ config = {'model': 'convnet',
 
 run_experiment(config, predict_test="convnet_augmentation", predict_val="convnet_augmentation")
 ```
+
+```console
+INFO - ISMI - Started run with ID "231"
+
+```
 ## No augumentation (70 minutes)
 ```python
 config = {'model': 'convnet',
