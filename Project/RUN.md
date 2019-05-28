@@ -30,7 +30,7 @@ config = {'model': 'nasnet',
 run_experiment(config, predict_test="nasnet_non_pretrained", predict_val="nasnet_non_pretrained")
 ```
 # ConvNet [RUNNING]
-## Augmentation (70 minutes)
+## Augmentation (70 minutes) 
 ```python
 config = {'model': 'convnet',
                'use_augment': True,
@@ -45,7 +45,7 @@ run_experiment(config, predict_test="convnet_augmentation", predict_val="convnet
 
 ```console
 INFO - ISMI - Started run with ID "231"
-
+Tensorboard run 1559041663.5635588, Modelcheckpoint 1559041668.5452788. Fitting on more epochs would probably increase the accuracy even more!
 ```
 ## No augumentation (70 minutes)
 ```python
