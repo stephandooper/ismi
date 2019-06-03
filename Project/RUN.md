@@ -2,7 +2,7 @@ Add configurations that you want to run to this list. I'll pull the repository b
 # ResNet
 
 # NasNet
-## Pre-trained
+## Pre-trained [Failed]
 ```python
 config = {'model': 'nasnet',
                'use_augment': True,
@@ -16,7 +16,7 @@ config = {'model': 'nasnet',
 run_experiment(config, predict_test="nasnet_pretrained", predict_val="nasnet_pretrained")
 ```
 
-## Not pre-trained
+## Not pre-trained [Done]
 ```python
 config = {'model': 'nasnet',
                'use_augment': True,
@@ -29,7 +29,13 @@ config = {'model': 'nasnet',
 
 run_experiment(config, predict_test="nasnet_non_pretrained", predict_val="nasnet_non_pretrained")
 ```
-# ConvNet [RUNNING]
+
+
+```
+INFO - ISMI - Started run with ID "236"
+```
+
+# ConvNet [Done]
 ## Augmentation (70 minutes) 
 ```python
 config = {'model': 'convnet',
@@ -47,7 +53,7 @@ run_experiment(config, predict_test="convnet_augmentation", predict_val="convnet
 INFO - ISMI - Started run with ID "231"
 Tensorboard run 1559041663.5635588, Modelcheckpoint 1559041668.5452788. Fitting on more epochs would probably increase the accuracy even more!
 ```
-## No augumentation (70 minutes)
+## No augumentation (70 minutes) [Done]
 ```python
 config = {'model': 'convnet',
                'use_augment': False,
@@ -58,6 +64,10 @@ config = {'model': 'convnet',
                'only_use_subset':False}
 
 run_experiment(config, predict_test="convnet_no_augmentation", predict_val="convnet_no_augmentation")
+```
+
+```
+INFO - ISMI - Started run with ID "232"
 ```
 
 # Capsnet (10 hours)
@@ -77,7 +87,7 @@ run_experiment(config, predict_test="capsnet_10epochs", predict_val="capsnet_10e
 ```
 
 # ReCNN
-## Augmentation (7 hours)
+## Augmentation (7 hours) [Running]
 ```python
 config = {'model': 'recnn',
                'use_augment': True,           
@@ -88,6 +98,10 @@ config = {'model': 'recnn',
                'only_use_subset':False}
 
 run_experiment(config, predict_test="recnn_augmentation", predict_val="recnn_augmentation")
+```
+
+```
+INFO - ISMI - Started run with ID "232"
 ```
 ## Without Augmentation [STOPPED] (7 hours)
 Stopped because Klaus is still updating the architecture.
@@ -104,5 +118,5 @@ run_experiment(config, predict_test="recnn_no_augmentation", predict_val="recnn_
 ```
 
 ```console
-INFO - ISMI - Started run with ID "230"
+INFO - ISMI - Started run with ID "237"
 ```
