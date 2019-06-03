@@ -99,6 +99,10 @@ config = {'model': 'recnn',
 
 run_experiment(config, predict_test="recnn_augmentation", predict_val="recnn_augmentation")
 ```
+
+```
+INFO - ISMI - Started run with ID "232"
+```
 ## Without Augmentation [STOPPED] (7 hours)
 Stopped because Klaus is still updating the architecture.
 ```python
@@ -114,5 +118,5 @@ run_experiment(config, predict_test="recnn_no_augmentation", predict_val="recnn_
 ```
 
 ```console
-INFO - ISMI - Started run with ID "230"
+INFO - ISMI - Started run with ID "237"
 ```
