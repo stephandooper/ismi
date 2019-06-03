@@ -76,18 +76,22 @@ INFO - ISMI - Started run with ID "232"
 config = {'model': 'capsnet',
                'use_augment': True,
                'model_params': {'weights': None},
-               'epochs': 10,
+               'epochs': 15,
                'use_capsnet': True,
                'batch_size': 32,
                'target_size':(96,96),
                'reduce_lr_on_plateau': True,
                'only_use_subset':False}
 
-run_experiment(config, predict_test="capsnet_10epochs", predict_val="capsnet_10epochs")
+run_experiment(config, predict_test="capsnet_15epochs", predict_val="capsnet_15epochs")
+```
+
+```console
+RUN 238
 ```
 
 # ReCNN
-## Augmentation (7 hours) [Running]
+## Augmentation (7 hours) [DONE]
 ```python
 config = {'model': 'recnn',
                'use_augment': True,           
@@ -103,7 +107,7 @@ run_experiment(config, predict_test="recnn_augmentation", predict_val="recnn_aug
 ```
 INFO - ISMI - Started run with ID "232"
 ```
-## Without Augmentation [STOPPED] (7 hours)
+## Without Augmentation [Running]
 Stopped because Klaus is still updating the architecture.
 ```python
 config = {'model': 'recnn',
