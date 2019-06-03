@@ -29,6 +29,12 @@ config = {'model': 'nasnet',
 
 run_experiment(config, predict_test="nasnet_non_pretrained", predict_val="nasnet_non_pretrained")
 ```
+
+
+```
+INFO - ISMI - Started run with ID "236"
+```
+
 # ConvNet [RUNNING]
 ## Augmentation (70 minutes) 
 ```python
@@ -58,6 +64,10 @@ config = {'model': 'convnet',
                'only_use_subset':False}
 
 run_experiment(config, predict_test="convnet_no_augmentation", predict_val="convnet_no_augmentation")
+```
+
+```
+INFO - ISMI - Started run with ID "232"
 ```
 
 # Capsnet (10 hours)
