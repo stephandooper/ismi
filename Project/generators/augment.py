@@ -15,9 +15,9 @@ from imgaug import augmenters as iaa
 
 basic = iaa.SomeOf((0,None), [iaa.Affine(rotate=90) ,iaa.Fliplr(1), iaa.Flipud(1)])
 
-morphology = iaa.SomeOf((0,None),[iaa.GaussianBlur(sigma=(0.0, 0.7)),
+morphology = iaa.SomeOf((0,None),[iaa.GaussianBlur(sigma=(0.0, 0.9)),
                              iaa.AdditiveGaussianNoise(scale=(0, 0.09*255)),
-                             iaa.ElasticTransformation(alpha=(0, 0.65), sigma=0.25),
+                             iaa.ElasticTransformation(alpha=(0, 0.75), sigma=0.25),
                              iaa.Affine(scale=(1, 1.25))])
 
 
@@ -30,8 +30,8 @@ hsv = iaa.SomeOf((0,None),
                     iaa.WithColorspace(
                     to_colorspace="HSV",
                     from_colorspace="RGB",
-                    children=iaa.Sequential([iaa.WithChannels((1), iaa.Add((-20, 20))),
-                             iaa.WithChannels((0), iaa.Add((-20, 20)))])
+                    children=iaa.Sequential([iaa.WithChannels((1), iaa.Add((-10, 10))),
+                             iaa.WithChannels((0), iaa.Add((-15, 7)))])
                     )
                  ]
                 )
