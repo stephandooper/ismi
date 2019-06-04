@@ -125,7 +125,13 @@ ReCNN  | Different parameters, 15 epochs (?augmentation) | Twist
 
 Move run results to "results" and remove from table above when done.
 
-Ensemble
+# Ensemble
+Set `shuffle=False`
+Generate using trained weights using:
+* Convnet augmented
+* Capsnet 15
+* Nasnet 15
+
 
 # Results
 Network | Augmented | Epochs | Validation accuracy | Test AUC 
