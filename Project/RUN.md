@@ -111,6 +111,20 @@ run_experiment(config, predict_test="recnn_no_augmentation", predict_val="recnn_
 INFO - ISMI - Started run with ID "237"
 ```
 
+# Runs June 4th
+Network | Settings | Machine | 
+--------|----------|---------|----
+NasNet | 5 epochs, with augmentation | Thunderlane | 6 hours
+NasNet | 5 epochs, without augmentation | Thunderlane | 6 hours
+NasNet | 30 epochs | Thunderlane | 32 hours
+ConvNet Custom | 15 epochs, k-max pooling | Thunderlane | 3 hours
+CapsNet | Batch Normalization | Thunderlane | 3 hours
+ReCNN  | Different parameters, 5 epochs, with augmentation | Twist 
+ReCNN  | Different parameters, 5 epochs, without augmentation | Twist
+ReCNN  | Different parameters, 15 epochs (?augmentation) | Twist
+
+Move run results to "results" and remove from table above when done.
+
 # Results
 Network | Augmented | Epochs | Validation accuracy | Test AUC 
 --------|-----------|--------|---------------------|--------------
