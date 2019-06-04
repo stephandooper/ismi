@@ -125,6 +125,8 @@ ReCNN  | Different parameters, 15 epochs (?augmentation) | Twist
 
 Move run results to "results" and remove from table above when done.
 
+Ensemble
+
 # Results
 Network | Augmented | Epochs | Validation accuracy | Test AUC 
 --------|-----------|--------|---------------------|--------------
