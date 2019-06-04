@@ -112,7 +112,7 @@ INFO - ISMI - Started run with ID "237"
 ```
 
 # Runs June 4th
-Network | Settings | Machine | 
+Network | Settings | Machine | Time
 --------|----------|---------|----
 NasNet | 5 epochs, with augmentation | Thunderlane | 6 hours
 NasNet | 5 epochs, without augmentation | Thunderlane | 6 hours
