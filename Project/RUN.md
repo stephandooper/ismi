@@ -124,3 +124,12 @@ run_experiment(config, predict_test="recnn_no_augmentation", predict_val="recnn_
 ```console
 INFO - ISMI - Started run with ID "237"
 ```
+
+# Results
+Network | Augmented | Epochs | Validation accuracy | Test AUC 
+--------|-----------|--------|---------------------|--------------
+NasNet  | Yes       |15      | 0.8945              | 0.9623 	
+ReCNN   | Yes       | 15     | 0.8560              | -
+ReCNN   | No        | 15     | 0.8572              | - 
+CapsNet | Yes       | 15     | 0.8580              | 0.8939
+ConvNet | Yes       | 15     |                     | 0.9489 	
