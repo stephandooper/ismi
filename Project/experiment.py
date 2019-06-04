@@ -17,6 +17,7 @@ from keras.layers import Input, Dense, Flatten
 from keras.models import Model
 from keras.preprocessing.image import ImageDataGenerator
 from keras.callbacks import TensorBoard, Callback, ReduceLROnPlateau, ModelCheckpoint, EarlyStopping
+from keras.optimizers import Adam
 
 from skimage import exposure
 
@@ -30,6 +31,7 @@ from models.resnet import build_resnet
 from models.densenet import build_dense
 from models.nasnet import build_nasnet
 from models.convnet import build_convnet
+from models.convnet_custom import build_custom_convnet
 from models.capsnet import build_capsnet
 from models.convnet_reg import build_convnet_reg
 from models.recnn import build_recnn
@@ -265,7 +267,7 @@ def run_experiment(config, predict_test = False, predict_val = False):
         model_func = model_dict[config.get('model')]
         # Actually invoke the function
         model_params = config.get('model_params',{})
-
+        lr = config.get('lr',0.001)
         if config.get('model') == 'dense' and 'target_size' not in model_params:
             model_params['target_size'] = target_size
 
@@ -273,7 +275,7 @@ def run_experiment(config, predict_test = False, predict_val = False):
         model = model_func(**model_params)
 
         # TODO: parametrize optimizer and learning rate here
-        model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+        model.compile(optimizer=Adam(lr=lr), loss='binary_crossentropy', metrics=['accuracy'])
         
         # print(model.summary())
 
@@ -338,7 +340,8 @@ model_dict = {
     'convnet': build_convnet,
     'convnet_reg': build_convnet_reg,
     'capsnet': build_capsnet,
-    'recnn': build_recnn
+    'recnn': build_recnn,
+    'custom_convnet':build_custom_convnet
 }
     
 

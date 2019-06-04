@@ -30,8 +30,8 @@ hsv = iaa.SomeOf((0,None),
                     iaa.WithColorspace(
                     to_colorspace="HSV",
                     from_colorspace="RGB",
-                    children=iaa.Sequential([iaa.WithChannels((1), iaa.Add((-10, 10))),
-                             iaa.WithChannels((0), iaa.Add((-15, 7)))])
+                    children=iaa.Sequential([iaa.WithChannels((1), iaa.Add((-20, 10))),
+                             iaa.WithChannels((0), iaa.Add((-20, 12)))])
                     )
                  ]
                 )
