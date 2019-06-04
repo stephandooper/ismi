@@ -2,20 +2,6 @@ Add configurations that you want to run to this list. I'll pull the repository b
 # ResNet
 
 # NasNet
-## Pre-trained [Failed]
-```python
-config = {'model': 'nasnet',
-               'use_augment': True,
-               'model_params': {'weights': 'imagenet'},
-               'epochs': 10,
-               'batch_size': 32,
-               'target_size':(96,96),
-               'reduce_lr_on_plateau': True,
-               'only_use_subset':False}
-
-run_experiment(config, predict_test="nasnet_pretrained", predict_val="nasnet_pretrained")
-```
-
 ## Not pre-trained [Done]
 ```python
 config = {'model': 'nasnet',
@@ -76,18 +62,22 @@ INFO - ISMI - Started run with ID "232"
 config = {'model': 'capsnet',
                'use_augment': True,
                'model_params': {'weights': None},
-               'epochs': 10,
+               'epochs': 15,
                'use_capsnet': True,
                'batch_size': 32,
                'target_size':(96,96),
                'reduce_lr_on_plateau': True,
                'only_use_subset':False}
 
-run_experiment(config, predict_test="capsnet_10epochs", predict_val="capsnet_10epochs")
+run_experiment(config, predict_test="capsnet_15epochs", predict_val="capsnet_15epochs")
+```
+
+```console
+RUN 238
 ```
 
 # ReCNN
-## Augmentation (7 hours) [Running]
+## Augmentation (7 hours) [DONE]
 ```python
 config = {'model': 'recnn',
                'use_augment': True,           
@@ -103,7 +93,7 @@ run_experiment(config, predict_test="recnn_augmentation", predict_val="recnn_aug
 ```
 INFO - ISMI - Started run with ID "232"
 ```
-## Without Augmentation [STOPPED] (7 hours)
+## Without Augmentation [DONE]
 Stopped because Klaus is still updating the architecture.
 ```python
 config = {'model': 'recnn',
@@ -120,3 +110,30 @@ run_experiment(config, predict_test="recnn_no_augmentation", predict_val="recnn_
 ```console
 INFO - ISMI - Started run with ID "237"
 ```
+
+# Runs June 4th
+Network | Settings | Machine | Time
+--------|----------|---------|----
+NasNet | 5 epochs, with augmentation | Thunderlane | 6 hours
+NasNet | 5 epochs, without augmentation | Thunderlane | 6 hours
+NasNet | 30 epochs | Thunderlane | 32 hours
+ConvNet Custom | 15 epochs, k-max pooling | Thunderlane | 3 hours
+CapsNet | Batch Normalization | Thunderlane | 3 hours
+ReCNN  | Different parameters, 5 epochs, with augmentation | Twist 
+ReCNN  | Different parameters, 5 epochs, without augmentation | Twist
+ReCNN  | Different parameters, 15 epochs (?augmentation) | Twist
+
+Move run results to "results" and remove from table above when done.
+
+Ensemble
+
+# Results
+Network | Augmented | Epochs | Validation accuracy | Test AUC 
+--------|-----------|--------|---------------------|--------------
+NasNet  | Yes       | 15     | 0.8945              | 0.9623 	
+ReCNN   | Yes       | 15     | 0.8560              | -
+ReCNN   | No        | 15     | 0.8572              | - 
+CapsNet | Yes       | 15     | 0.8580              | 0.8939
+ConvNet | Yes       | 15     | 0.8682              | 0.9489 	
+ConvNet | No        | 15     | 0.8345              | 0.9277
+
