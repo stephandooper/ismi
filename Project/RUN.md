@@ -76,7 +76,7 @@ run_experiment(config, predict_test="capsnet_15epochs", predict_val="capsnet_15e
 RUN 238
 ```
 
-# ReCNN
+# ReCNN (old params)
 ## Augmentation (7 hours) [DONE]
 ```python
 config = {'model': 'recnn',
@@ -111,6 +111,10 @@ run_experiment(config, predict_test="recnn_no_augmentation", predict_val="recnn_
 INFO - ISMI - Started run with ID "237"
 ```
 
+# ReCNN (new params)
+## Augmentation (7 hours)
+Run ID: 267
+
 # Runs June 4th
 Network | Settings | Machine | Time
 --------|----------|---------|----
@@ -120,7 +124,6 @@ NasNet | 30 epochs | Thunderlane | 32 hours
 ConvNet Custom | 15 epochs, k-max pooling | Thunderlane | 3 hours
 CapsNet | Batch Normalization | Thunderlane | 3 hours
 ReCNN  | Different parameters, 5 epochs, with augmentation | Twist 
-ReCNN  | Different parameters, 5 epochs, without augmentation | Twist
 ReCNN  | Different parameters, 15 epochs (?augmentation) | Twist
 
 Move run results to "results" and remove from table above when done.
@@ -137,9 +140,10 @@ Generate using trained weights using:
 Network | Augmented | Epochs | Validation accuracy | Test AUC 
 --------|-----------|--------|---------------------|--------------
 NasNet  | Yes       | 15     | 0.8945              | 0.9623 	
-ReCNN   | Yes       | 15     | 0.8560              | -
-ReCNN   | No        | 15     | 0.8572              | - 
+ReCNN (old)  | Yes       | 15     | 0.8560              | -
+ReCNN  (old) | No        | 15     | 0.8572              | - 
 CapsNet | Yes       | 15     | 0.8580              | 0.8939
 ConvNet | Yes       | 15     | 0.8682              | 0.9489 	
 ConvNet | No        | 15     | 0.8345              | 0.9277
+ReCNN   | No        | 5      | 0.8269              |  -
 
