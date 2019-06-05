@@ -12,7 +12,7 @@ config = {'model': 'nasnet',
 #run_experiment(config, predict_test=True)
 
 config = {'model': 'convnet',
-               'use_augment': True,
+               'use_augment': False,
                'model_params': {'weights': None},
                'epochs': 5,
                'batch_size': 64,
