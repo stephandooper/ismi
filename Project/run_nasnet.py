@@ -9,9 +9,9 @@ config = {'model': 'nasnet',
                'reduce_lr_on_plateau': True,
                'only_use_subset':False}
 
-#run_experiment(config, predict_test=True)
+run_experiment(config, predict_test="Nasnet_5epoch_aug", predict_valid="Nasnet_5epoch_aug")
 
-config = {'model': 'convnet',
+config = {'model': 'nasnet',
                'use_augment': False,
                'model_params': {'weights': None},
                'epochs': 5,
@@ -20,16 +20,5 @@ config = {'model': 'convnet',
                'reduce_lr_on_plateau': True,
                'only_use_subset':False}
 
-run_experiment(config, predict_test=True)
+run_experiment(config, predict_test="Nasnet_5epoch_nonaug", predict_valid="Nasnet_5epoch_nonaug")
 
-
-config = {'model': 'convnet_reg',
-               'use_augment': True,
-               'model_params': {'weights': None},
-               'epochs': 20,
-               'batch_size': 64,
-               'target_size':(96,96),
-               'reduce_lr_on_plateau': True,
-               'only_use_subset':False}
-
-run_experiment(config, predict_test=True)
