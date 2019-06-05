@@ -9,7 +9,7 @@ config = {'model': 'nasnet',
                'reduce_lr_on_plateau': True,
                'only_use_subset':False}
 
-run_experiment(config, predict_test="Nasnet_5epoch_aug", predict_valid="Nasnet_5epoch_aug")
+run_experiment(config, predict_test="Nasnet_5epoch_aug", predict_val="Nasnet_5epoch_aug")
 
 config = {'model': 'nasnet',
                'use_augment': False,
@@ -20,5 +20,5 @@ config = {'model': 'nasnet',
                'reduce_lr_on_plateau': True,
                'only_use_subset':False}
 
-run_experiment(config, predict_test="Nasnet_5epoch_nonaug", predict_valid="Nasnet_5epoch_nonaug")
+run_experiment(config, predict_test="Nasnet_5epoch_nonaug", predict_val="Nasnet_5epoch_nonaug")
 
