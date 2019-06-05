@@ -148,5 +148,5 @@ CapsNet | Yes       | 15     | 0.8580              | 0.8939
 ConvNet | Yes       | 15     | 0.8682              | 0.9489 	
 ConvNet | No        | 15     | 0.8345              | 0.9277
 ReCNN   | No        | 5      | 0.8269              | 0.9143
-ReCNN   | Yes       | 5      | 0.8915              |  ?
+ReCNN   | Yes       | 5      | 0.8915              | 0.9573
 
