@@ -139,8 +139,8 @@ Generate using trained weights using:
 # Results
 Network | Augmented | Epochs | Validation accuracy | Test AUC 
 --------|-----------|--------|---------------------|--------------
-NasNet  | No          |   5     |                     | 
-NasNet  | Yes         |    5    |                     |
+NasNet  | No          |   5     |                     | 0.672
+NasNet  | Yes         |    5    |                     | 0.6080
 NasNet  | Yes       | 15     | 0.8945              | 0.9623 	
 ReCNN (old)  | Yes       | 15     | 0.8560         | -
 ReCNN  (old) | No        | 15     | 0.8572         | - 
