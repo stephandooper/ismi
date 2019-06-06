@@ -1,6 +1,7 @@
 import numpy as np
 from keras import layers, models, optimizers
 from keras import backend as K
+from keras.layers import BatchNormalization
 from keras.utils import to_categorical
 import matplotlib.pyplot as plt
 from PIL import Image
