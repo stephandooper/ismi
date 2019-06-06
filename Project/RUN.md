@@ -121,8 +121,6 @@ Run ID: 286
 # Runs June 4th
 Network | Settings | Machine | Time
 --------|----------|---------|----
-NasNet | 5 epochs, with augmentation | Thunderlane | 6 hours
-NasNet | 5 epochs, without augmentation | Thunderlane | 6 hours
 NasNet | 30 epochs | Thunderlane | 32 hours
 ConvNet Custom | 15 epochs, k-max pooling | Thunderlane | 3 hours
 CapsNet | Batch Normalization | Thunderlane | 3 hours
@@ -141,10 +139,14 @@ Generate using trained weights using:
 # Results
 Network | Augmented | Epochs | Validation accuracy | Test AUC 
 --------|-----------|--------|---------------------|--------------
+NasNet  | No          |   5     |                     | 0.672
+NasNet  | Yes         |    5    |                     | 0.6080
 NasNet  | Yes       | 15     | 0.8945              | 0.9623 	
-ReCNN (old)  | Yes       | 15     | 0.8560              | -
-ReCNN  (old) | No        | 15     | 0.8572              | - 
-CapsNet | Yes       | 15     | 0.8580              | 0.8939
+NasNet  | Yes       | 30     |              |  	
+ReCNN (old)  | Yes       | 15     | 0.8560         | -
+ReCNN  (old) | No        | 15     | 0.8572         | - 
+CapsNet | Yes       | 15     | ?june 6 20:03       | 0.9296
+CapsNet (BN) | Yes  |      |        | 
 ConvNet | Yes       | 15     | 0.8682              | 0.9489 	
 ConvNet | No        | 15     | 0.8345              | 0.9277
 ReCNN   | No        | 5      | 0.8269              | 0.9143
