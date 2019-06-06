@@ -33,7 +33,7 @@ from models.nasnet import build_nasnet
 from models.convnet import build_convnet
 from models.convnet_custom import build_custom_convnet
 from models.capsnet import build_capsnet
-from models.capsnet import build_capsnet_bn
+from models.capsnet_bn import build_capsnet_bn
 from models.convnet_reg import build_convnet_reg
 from models.recnn import build_recnn
 

@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from PIL import Image
 from models.capsulelayers import CapsuleLayer, PrimaryCap, Length, Mask
 
-def build_capsnet(**kwargs):
+def build_capsnet_bn(**kwargs):
     n_class=1
     routings = kwargs.get('routings', 1)
     dimensions = 16
