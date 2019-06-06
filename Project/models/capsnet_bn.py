@@ -1,11 +1,12 @@
 import numpy as np
 from keras import layers, models, optimizers
 from keras import backend as K
-from keras.layers import BatchNormalization
+from keras.layers import BatchNormalization, LeakyReLU
 from keras.utils import to_categorical
 import matplotlib.pyplot as plt
 from PIL import Image
 from models.capsulelayers import CapsuleLayer, PrimaryCap, Length, Mask
+
 
 def build_capsnet_bn(**kwargs):
     n_class=1
