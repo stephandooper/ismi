@@ -144,6 +144,7 @@ NasNet  | Yes       | 30     |              |  	0.9409634828836123
 ReCNN (old)  | Yes       | 15     | 0.8560         | -
 ReCNN  (old) | No        | 15     | 0.8572         | - 
 CapsNet | Yes       | 15     | ?june 6 20:03       | 0.9296
+CapsNet | ???       | 15     | ???       | 0.9323
 CapsNet (BN) | Yes  |      |        | 0.9144
 ConvNet | Yes       | 15     | 0.8682              | 0.9489 	
 ConvNet | No        | 15     | 0.8345              | 0.9277
