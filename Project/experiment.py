@@ -8,6 +8,7 @@ import os
 from time import time
 from tqdm import tqdm
 from IPython.core.display import display, HTML            
+from keras import backend as K
 
 # Suppress GPU if needed
 # os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
@@ -305,7 +306,9 @@ def run_experiment(config, predict_test = False, predict_val = False, reproduce_
                             epochs=epochs, 
                             validation_data=validation_generator, 
                             validation_steps=len(validation_generator),
-                            callbacks=[tensorboard, LogMetrics(), modelcheckpoint, earlystopping])
+                            callbacks=[tensorboard, LogMetrics(), modelcheckpoint, earlystopping])     
+        print(model.evaluate_generator(validation_generator, steps=len(validation_generator)))
+            
         if predict_val: 
             print('[!] Predicting validation set')
             model.load_weights(modelcheckpoint_name)
