@@ -36,3 +36,5 @@ def build_recnn(**kwargs):
                       subsample_initial_block=subsample_initial_block)
     
     return model
+x=build_recnn()
+x=x.summary()
