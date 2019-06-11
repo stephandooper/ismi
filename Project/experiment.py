@@ -33,7 +33,7 @@ from models.nasnet import build_nasnet
 from models.convnet import build_convnet
 from models.convnet_custom import build_custom_convnet
 from models.capsnet import build_capsnet
-from models.capsnet import build_capsnet_bn
+from models.capsnet_bn import build_capsnet_bn
 from models.convnet_reg import build_convnet_reg
 from models.recnn import build_recnn
 
@@ -215,7 +215,7 @@ def build_generators(batch_size=32, target_size= (96,96), only_use_subset=False,
 
     return train_generator, validation_generator, test_generator
 
-def run_experiment(config, predict_test = False, predict_val = False):
+def run_experiment(config, predict_test = False, predict_val = False, reproduce_result=None):
 
     ex = Experiment('ISMI', interactive=True)
     # log to the mongoDB instance living in the cloud
@@ -293,6 +293,9 @@ def run_experiment(config, predict_test = False, predict_val = False):
         
         # Save best models to file
         modelcheckpoint_name = "checkpoints/model-{}.hdf5".format(time())
+        if reproduce_result:
+            modelcheckpoint_name = "checkpoints/model-{}.hdf5".format(reproduce_result)
+        
         modelcheckpoint = ModelCheckpoint(modelcheckpoint_name, monitor='val_loss', verbose=1, save_best_only=True, save_weights_only=True)
         
         # Stop early when val_loss does not increase anymore
