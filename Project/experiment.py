@@ -312,7 +312,11 @@ def run_experiment(config, predict_test = False, predict_val = False, reproduce_
         if predict_val: 
             print('[!] Predicting validation set')
             model.load_weights(modelcheckpoint_name)
-            prediction = model.predict_generator(validation_generator, steps=len(validation_generator), verbose=1)
+            prediction = model.predict_generator(validation_generator, 
+                                                 steps=len(validation_generator), 
+                                                 workers = 0,
+                                                 use_multiprocessing=False,
+                                                 verbose=1)
             if config.get('use_capsnet'):
                 prediction = prediction[0]
             data = {'case': np.arange(len(prediction)), 'prediction': np.ravel(prediction)}
@@ -322,7 +326,8 @@ def run_experiment(config, predict_test = False, predict_val = False, reproduce_
         if predict_test:
             print('[!] Predicting test set')
             model.load_weights(modelcheckpoint_name)
-            prediction = model.predict_generator(test_generator, steps=len(test_generator), verbose=1)
+            prediction = model.predict_generator(test_generator, workers = 0, use_multiprocessing=False,
+                                                 steps=len(test_generator), verbose=1)
             if config.get('use_capsnet'):
                 prediction = prediction[0]
             data = {'case': np.arange(len(prediction)), 'prediction': np.ravel(prediction)}
