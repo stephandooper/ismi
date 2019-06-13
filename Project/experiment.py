@@ -196,8 +196,8 @@ def build_generators(batch_size=32, target_size= (96,96), only_use_subset=False,
         x=x_valid,
         y=np.ravel(y_valid),
         batch_size=batch_size,
-	shuffle=False,
-	seed=0)
+        shuffle=False,
+        seed=0)
 
     print("[!] Creating train_generator")
     train_generator = train_datagen.flow(
