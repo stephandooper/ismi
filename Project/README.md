@@ -54,7 +54,7 @@ nice -n 19 jupyter notebook --port 8888 --no-browser --ip=0.0.0.0
 This will create a job with niceness value 19. The no-browser command will prevent the notebook from running within the terminal, and the ip command opens the ports (will fix any connection refused errors). 
 If port 8888 is closed or already taken by any chance, then you will be automatically assigned a new port (remember this), or you will have to assign a new port yourself.
 
-### Configuring on Ponyland (Linux only!)
+### Configuring on Ponyland
 In order to run a jupyter notebook in a local browser, we need to tunnel internet traffic through ssh. First, open a terminal on your local machine and type in the following commands (assuming you assigned port 8888 earlier):
 ```bash
 ssh -L 8888:thunderlane:8888 user@applejack.science.ru.nl
@@ -69,12 +69,8 @@ The dataset can be acquired [here](https://www.kaggle.com/c/histopathologic-canc
 
 The second one is from the [Grand Challenge website](https://patchcamelyon.grand-challenge.org/) . This one is basically the same as the Kaggle dataset, but contains duplicates and is already split into a training/validation/test set.
 
-
-
-## Sacred with MongoDB (KLAUS!!!!)
-
-
 ## Keras API
+Below we have added some tips that can be easily added in order to improve your experience with Keras.
 
 ### Tensorboard
 For hyperparameter tuning, we can use Tensorboard. This can be installed by running `pip install tensorboard`. You can run Tensorboard by running `tensorboard --logdir logs/` in Shell. Tensorboard will then start running on [http://localhost:6006/](http://localhost:6006/). You can add Tensorboard as callback in Keras:
